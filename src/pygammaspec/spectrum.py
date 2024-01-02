@@ -231,7 +231,8 @@ class GammaSpectrum:
             raise ValueError("The average window width must be a positive integer")
         
         obj = GammaSpectrum()
-        obj.__acquisition_time = None 
+        obj.__acquisition_time = None
+        obj.__calibration = self.__calibration
 
         obj.__channels = self.__channels[width:-width]
 
