@@ -1,8 +1,7 @@
 import matplotlib.pyplot as plt
-from typing import Optional, List
+from typing import Optional
 
-from pygammaspec.spectrum import GammaSpectrum
-from pygammaspec.analysis import Calibration
+from pygammaspec.spectrum import GammaSpectrum, Calibration
 
 
 def plot_spectrum(
@@ -62,7 +61,10 @@ def plot_spectrum(
         c="#AAAAAA",
     )
     ax2.plot(
-        [calibration.get_energy(c) if calibration else c for c in avg_difference.channels],
+        [
+            calibration.get_energy(c) if calibration else c
+            for c in avg_difference.channels
+        ],
         avg_difference.counts,
         c="black",
     )
@@ -73,11 +75,23 @@ def plot_spectrum(
     if calibration:
         ax2.set_xlabel("Energy (keV)", size=16)
     else:
-        ax2.set_xlabel("Channel", size=16)    
+        ax2.set_xlabel("Channel", size=16)
 
     if xlog:
+        xstart = 0
+        for x, y1, y2 in zip(background.channels, background.counts, sample.counts):
+            if y1 > 0 or y2 > 0:
+                break
+            xstart = x
+
         ax1.set_xscale("log")
         ax2.set_xscale("log")
+        ax1.set_xlim(left=calibration.get_energy(xstart) if calibration else xstart)
+        ax2.set_xlim(left=calibration.get_energy(xstart) if calibration else xstart)
+    
+    else:
+        ax1.set_xlim(left=0)
+        ax2.set_xlim(left=0)
 
     if ylog:
         ax1.set_yscale("log")
