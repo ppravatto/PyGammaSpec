@@ -1,0 +1,20 @@
+# Table of contents
+
+format: jb-book
+root: intro
+chapters:
+- file: getting-started
+- file: user-guide
+  sections:
+    - file: Guide/spectrum
+    - file: Guide/calibration
+    - file: Guide/analysis
+
+- file: api
+  sections:
+    - file: API/spectrum
+    - file: API/analysis
+    - file: API/visualization
+    
+- file: contributor-guide
+- file: release-notes
