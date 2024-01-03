@@ -6,26 +6,29 @@ from pygammaspec.spectrum import GammaSpectrum, Calibration
 
 def plot_spectrum(
     sample: GammaSpectrum,
-    background: GammaSpectrum,
+    background: Optional[GammaSpectrum] = None,
     xlog: bool = False,
     ylog: bool = False,
+    avg_size: int = 10,
     filename: Optional[str] = None,
     calibration: Optional[Calibration] = None,
 ):
     """
-    The function plots the gamma spectrum of the sample together with that of the background and automatically computes the
-    difference of the two spectra.
+    The function plots the gamma spectrum of the sample. If a background spetrum is given, the function automatically
+    computes the difference of the two spectra and also display the difference.
 
     Arguments
     ---------
     sample: GammaSpectrum
         The gamma spectrum recorded for the sample.
-    background: GammaSpectrum
+    background: Optional[GammaSpectrum]
         The gamma spectrum of the background.
     xlog: bool
         If set to True will set the x-scale to logarithmic form.
     ylog: bool
         If set to True will set the y-scale to logarithmic form.
+    avg_size: int
+        Size of the averaging window used to smooth out the difference spectrum (default: 10)
     filename: Optional[str]
         If not None, will indicate the path of the generated image file.
     calibration: Optional[Calibration]
@@ -34,14 +37,46 @@ def plot_spectrum(
 
     plt.rc("font", **{"size": 14})
 
-    fig, (ax1, ax2) = plt.subplots(nrows=2, figsize=(12, 10))
+    if background is None:
+        fig, ax1 = plt.subplots(figsize=(12, 5))
+        ax1.set_xlabel("Energy (keV)" if calibration else "Channel", size=16)
 
-    ax1.plot(
+    else:
+        fig, (ax1, ax2) = plt.subplots(nrows=2, figsize=(12, 10))
+
+        ax1.plot(
         [calibration.get_energy(c) if calibration else c for c in background.channels],
         background.counts,
         c="#00AAAA",
         label="Background",
     )
+
+        difference = sample - background
+        avg_difference = difference.average_smoothing(avg_size)
+
+        ax2.plot(
+            [
+                calibration.get_energy(c) if calibration else c
+                for c in difference.channels
+            ],
+            difference.counts,
+            c="#AAAAAA",
+        )
+        ax2.plot(
+            [
+                calibration.get_energy(c) if calibration else c
+                for c in avg_difference.channels
+            ],
+            avg_difference.counts,
+            c="black",
+        )
+
+        ax2.set_ylabel("Activity (cps)", size=16)
+        ax2.set_xlabel("Energy (keV)" if calibration else "Channel", size=16)
+
+        ax2.grid(which="major", c="#DDDDDD")
+        ax2.grid(which="minor", c="#EEEEEE")
+
     ax1.plot(
         [calibration.get_energy(c) if calibration else c for c in sample.channels],
         sample.counts,
@@ -49,33 +84,7 @@ def plot_spectrum(
         label="Sample",
     )
 
-    ax1.legend()
     ax1.set_ylabel("Activity (cps)", size=16)
-
-    difference = sample - background
-    avg_difference = difference.average_smoothing(10)
-
-    ax2.plot(
-        [calibration.get_energy(c) if calibration else c for c in difference.channels],
-        difference.counts,
-        c="#AAAAAA",
-    )
-    ax2.plot(
-        [
-            calibration.get_energy(c) if calibration else c
-            for c in avg_difference.channels
-        ],
-        avg_difference.counts,
-        c="black",
-    )
-
-    # ax2.set_xlim(plot_range)
-    ax2.set_ylabel("Activity (cps)", size=16)
-
-    if calibration:
-        ax2.set_xlabel("Energy (keV)", size=16)
-    else:
-        ax2.set_xlabel("Channel", size=16)
 
     if xlog:
         xstart = 0
@@ -85,27 +94,34 @@ def plot_spectrum(
             xstart = x
 
         ax1.set_xscale("log")
-        ax2.set_xscale("log")
         ax1.set_xlim(left=calibration.get_energy(xstart) if calibration else xstart)
-        ax2.set_xlim(left=calibration.get_energy(xstart) if calibration else xstart)
-    
+
+        if background is not None:
+            ax2.set_xscale("log")
+            ax2.set_xlim(left=calibration.get_energy(xstart) if calibration else xstart)
+
     else:
         ax1.set_xlim(left=0)
-        ax2.set_xlim(left=0)
+
+        if background is not None:
+            ax2.set_xlim(left=0)
 
     if ylog:
         ax1.set_yscale("log")
-        ax2.set_yscale("log")
-        ax2.set_ylim(
-            bottom=min(
-                [x if x > 0 else max(difference.counts) for x in difference.counts]
+
+        if background is not None:
+            ax2.set_yscale("log")
+            ax2.set_ylim(
+                bottom=min(
+                    [x if x > 0 else max(difference.counts) for x in difference.counts]
+                )
             )
-        )
 
     ax1.grid(which="major", c="#DDDDDD")
     ax1.grid(which="minor", c="#EEEEEE")
-    ax2.grid(which="major", c="#DDDDDD")
-    ax2.grid(which="minor", c="#EEEEEE")
+
+    if background:
+        ax1.legend()
 
     plt.tight_layout()
 
