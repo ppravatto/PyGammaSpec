@@ -105,6 +105,41 @@ const thebe_selector_output = ".output, .cell_output"
   <section class="tex2jax_ignore mathjax_ignore" id="module-pygammaspec.analysis">
 <span id="pygammaspec-analysis-module"></span><span id="api-analysis"></span><h1><code class="docutils literal notranslate"><span class="pre">pygammaspec.analysis</span></code> module<a class="headerlink" href="#module-pygammaspec.analysis" title="Permalink to this heading"></a></h1>
 <dl class="py function">
+<dt class="sig sig-object py" id="pygammaspec.analysis.fit_peak">
+<span class="sig-prename descclassname"><span class="pre">pygammaspec.analysis.</span></span><span class="sig-name descname"><span class="pre">fit_peak</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spectrum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseline_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxfev</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygammaspec.analysis.fit_peak" title="Permalink to this definition"></a></dt>
+<dd><p>The function perform a Gaussian fit of a single photopeak using a polynomial baseline of variable order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spectrum</strong> (<a class="reference internal" href="spectrum.html#pygammaspec.spectrum.GammaSpectrum" title="pygammaspec.spectrum.GammaSpectrum"><em>GammaSpectrum</em></a>) – The spectrum object containing the data to be fitted. The spectrum must contain an energy calibration.</p></li>
+<li><p><strong>emin</strong> (<em>float</em>) – The minimum energy defining the region to fit.</p></li>
+<li><p><strong>emax</strong> (<em>float</em>) – The maximum energy defining the region to fit.</p></li>
+<li><p><strong>baseline_order</strong> (<em>int</em>) – The order of the baseline function to be used.</p></li>
+<li><p><strong>maxfev</strong> (<em>int</em>) – The maximum number of functon evaluation during optimization.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> – Exception raised if the given spectrum has no energy calibration.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>List[float]</em> – The optimized fitting parameters. The array lists in order the height of the gaussian, its center and its standard
+deviation and it ends with the coefficients of the baseline polynomial listed in ascending order. The lenght of the
+list is <cite>3 + b + 1</cite> where <cite>b</cite> is the <cite>basline_order</cite>.</p></li>
+<li><p><em>List[float]</em> – The list of energy datapoints used in the fitting.</p></li>
+<li><p><em>List[float]</em> – The list of counts associated with the fitted function.</p></li>
+<li><p><em>List[float]</em> – The list of counts associated with the baseline function.</p></li>
+<li><p><em>float</em> – The estimated efficiency for the peak as 100*FWHM(E)/E.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Tuple</em>[<em>List</em>[float], <em>List</em>[float], <em>List</em>[float], <em>List</em>[float], float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="pygammaspec.analysis.peak_search">
 <span class="sig-prename descclassname"><span class="pre">pygammaspec.analysis.</span></span><span class="sig-name descname"><span class="pre">peak_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spectrum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prominence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygammaspec.analysis.peak_search" title="Permalink to this definition"></a></dt>
 <dd><p>Function running the <cite>scipy.signal.find_peaks</cite> funciton to detect peaks in the gamma spectrum.</p>
@@ -123,6 +158,27 @@ energy (in keV) as the value. If the spectrum is not calibrated the energy field
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Dict[int, Tuple[float, float, Optional[float]]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pygammaspec.analysis.unitary_height_gaussian">
+<span class="sig-prename descclassname"><span class="pre">pygammaspec.analysis.</span></span><span class="sig-name descname"><span class="pre">unitary_height_gaussian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygammaspec.analysis.unitary_height_gaussian" title="Permalink to this definition"></a></dt>
+<dd><p>Unitary height Gaussian function centered in <cite>x0</cite> and having a standar deviation of <cite>sigma</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – The point in which the function must be evaluated.</p></li>
+<li><p><strong>x0</strong> (<em>float</em>) – The center of the Gaussian function.</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – The standard deviation of the Gaussian.</p></li>
+<li><p><strong>Retruns</strong> – </p></li>
+<li><p><strong>-------</strong> – </p></li>
+<li><p><strong>float</strong> – The value of the funciont in <cite>x</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
