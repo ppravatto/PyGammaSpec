@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-import os
+import os, warnings
 import numpy as np
 
-from typing import List, Optional, Dict
+from copy import deepcopy
+from typing import List, Optional, Dict, Tuple
 
 
 class GammaSpectrum:
@@ -58,11 +59,13 @@ class GammaSpectrum:
     def calibration(self) -> None:
         self.__calibration = None
     
-    def __setup_operation(self, other: GammaSpectrum) -> GammaSpectrum:
+    def __setup_operation(self, other: GammaSpectrum) -> Tuple[GammaSpectrum, List[float], List[float]]:
         """
         Validate and setup a binary operation between spectrum objects. The function
-        checks if the channel labels are compatible within the limit imposed by the shortest
-        spectrum. If compatible the function returns a partially initialized GammaSpectrum object.
+        checks if the existing channel labels are compatible within the limit imposed by the shortest
+        spectrum. When the operation is carried out between spectra of different length, the shortest spectrum
+        is augmented by adding the missing channels with zero counts associated. If compatible the function
+        returns a partially initialized GammaSpectrum object together with the augmented counts lists.
 
         Raises
         ------
@@ -73,28 +76,46 @@ class GammaSpectrum:
         -------
         GammaSpectrum
             The partially initialized object containing the list of channels. The acquisition time is set to None.
+        List[float]
+            The list encoding the number of counts for the left object in the operation.
+        List[float]
+            The list encoding the number of counts for the right object in the operation.
         """
 
         limit = min(len(self.__channels), len(other.__channels))
         if not np.allclose(self.__channels[0:limit], other.__channels[0:limit], rtol=1e-5):
             raise RuntimeError("Cannot perform operation on two spectra characterized by different channels labels")
 
-        if self.calibration != other.calibration:
-            raise RuntimeError("Cannot perform operation on two spectra characterized by different energy calibrations")
-        
         obj = GammaSpectrum()
-        obj.__channels = self.__channels[0:limit]
-        obj.__calibration = self.__calibration
-        return obj
+
+        if self.calibration != other.calibration:
+            warnings.warn("Operation between specra with different calibrations. Calibration will be dropped in the result.", RuntimeWarning)
+            obj.__calibration = None
+        else:
+            obj.__calibration = self.__calibration
+        
+        left_counts = deepcopy(self.__counts)
+        right_counts = deepcopy(other.__counts)
+        
+        if len(self.__channels) > len(other.__channels):
+            obj.__channels = self.__channels
+            for _ in self.__channels[limit::]:
+                right_counts.append(0)
+        else:
+            obj.__channels = other.__channels
+            for _ in other.__channels[limit::]:
+                left_counts.append(0)
+        
+        return obj, left_counts, right_counts
     
     def __add__(self, other: GammaSpectrum) -> GammaSpectrum:
-        obj = self.__setup_operation(other)
-        obj.__counts = [x + y for x, y in zip(self.__counts, other.__counts)]
+        obj, left, right = self.__setup_operation(other)
+        obj.__counts = [x + y for x, y in zip(left, right)]
         return obj
     
     def __sub__(self, other: GammaSpectrum) -> GammaSpectrum:
-        obj = self.__setup_operation(other)
-        obj.__counts = [x - y for x, y in zip(self.__counts, other.__counts)]
+        obj, left, right = self.__setup_operation(other)
+        obj.__counts = [x - y for x, y in zip(left, right)]
         return obj
     
     @classmethod
