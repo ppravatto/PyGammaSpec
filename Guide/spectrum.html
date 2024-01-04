@@ -122,7 +122,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;pygammaspec.spectrum.GammaSpectrum object at 0x7f7a579ae670&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;pygammaspec.spectrum.GammaSpectrum object at 0x7f282fcaec10&gt;
 </pre></div>
 </div>
 </div>
@@ -182,7 +182,15 @@ Counts:
 <img alt="../_images/e5d0e43ed137060b4a0fe1ffe636fca3f92f720e019302b1b51bef7455b1475b.png" src="../_images/e5d0e43ed137060b4a0fe1ffe636fca3f92f720e019302b1b51bef7455b1475b.png" />
 </div>
 </div>
-<p>The library also supports arithmetic operations between instances of the <code class="docutils literal notranslate"><span class="pre">GammaSpectrum</span></code> class. In particular given two different <code class="docutils literal notranslate"><span class="pre">GammaSpectrum</span></code> object, sum and subtractions can be performed using the <code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">-</span></code> operators. The operations are allowed only between spectra having the same channel spacing/values and, if available, the same calibration. If the condition for running the operations are not met, a <code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code> is raised. If one set of data has more channels than the other the longer spectrum will be cut to the size of the smaller one.</p>
+<p>The library also supports arithmetic operations between instances of the <code class="docutils literal notranslate"><span class="pre">GammaSpectrum</span></code> class. In particular given two different <code class="docutils literal notranslate"><span class="pre">GammaSpectrum</span></code> object, sum and subtractions can be performed using the <code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">-</span></code> operators. If one set of data has more channels than the other, the shorter one will be completed, with empty channels, to match the longer one.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The operations between spectra are allowed only when the spectra share the same channel spacing (same sequence of channel indices). If the condition for running the operations are not met, a <code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code> exception is raised.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the spectra involved in the operation have different energy calibrations, a <code class="docutils literal notranslate"><span class="pre">RuntimeWarning</span></code> will be raised and the calibration will be dropped in the result. (more details on calibration are discussed <a class="reference internal" href="calibration.html#guide-calibration"><span class="std std-ref">here</span></a>)</p>
+</div>
 <p>To show how the operation works let us firstly load a new spectrum:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -212,10 +220,10 @@ Counts:
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Channels in the background: 6128
 Channels in the sample: 6017
-Channels in the difference: 6017
+Channels in the difference: 6128
 </pre></div>
 </div>
-<img alt="../_images/b7c1ab25a612e4886c64bc6fc75ff9a19afec000544e2da4624b0d3c93c75947.png" src="../_images/b7c1ab25a612e4886c64bc6fc75ff9a19afec000544e2da4624b0d3c93c75947.png" />
+<img alt="../_images/bda9d5802c774c22f33f12d02e7a92b575c744a129eaa0b3855689156c78a31e.png" src="../_images/bda9d5802c774c22f33f12d02e7a92b575c744a129eaa0b3855689156c78a31e.png" />
 </div>
 </div>
 <p>Please notice how to visualize a sample together with its background and automatically computing the difference of the two, the <code class="docutils literal notranslate"><span class="pre">plot_spectrum</span></code> function can be used providing the <code class="docutils literal notranslate"><span class="pre">background</span></code> argument. The following syntax can be used:</p>
@@ -226,7 +234,7 @@ Channels in the difference: 6017
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/943e4ae590240b1d18c5e396fc9f1c8df4c7c9a3f8921ab832ae3069b5deabb1.png" src="../_images/943e4ae590240b1d18c5e396fc9f1c8df4c7c9a3f8921ab832ae3069b5deabb1.png" />
+<img alt="../_images/5a1574f9f0f1183095a31ed3040f4617d3dfb9b4418c72889f53157e735001ea.png" src="../_images/5a1574f9f0f1183095a31ed3040f4617d3dfb9b4418c72889f53157e735001ea.png" />
 </div>
 </div>
 </section>

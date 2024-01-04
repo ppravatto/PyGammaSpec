@@ -57,7 +57,16 @@ smoothed_background = background.average_smoothing(5)
 plot_spectrum(smoothed_background, ylog=True)
 ```
 
-The library also supports arithmetic operations between instances of the `GammaSpectrum` class. In particular given two different `GammaSpectrum` object, sum and subtractions can be performed using the `+` and `-` operators. The operations are allowed only between spectra having the same channel spacing/values and, if available, the same calibration. If the condition for running the operations are not met, a `RuntimeError` is raised. If one set of data has more channels than the other the longer spectrum will be cut to the size of the smaller one. 
+The library also supports arithmetic operations between instances of the `GammaSpectrum` class. In particular given two different `GammaSpectrum` object, sum and subtractions can be performed using the `+` and `-` operators. If one set of data has more channels than the other, the shorter one will be completed, with empty channels, to match the longer one.
+
+```{warning}
+The operations between spectra are allowed only when the spectra share the same channel spacing (same sequence of channel indices). If the condition for running the operations are not met, a `RuntimeError` exception is raised.
+```
+
+```{note}
+If the spectra involved in the operation have different energy calibrations, a `RuntimeWarning` will be raised and the calibration will be dropped in the result. (more details on calibration are discussed [here](Guide-Calibration))
+```
+
 
 To show how the operation works let us firstly load a new spectrum:
 
