@@ -300,20 +300,23 @@ class Calibration:
 
         self.__coefficients = np.polyfit(self.__channels, self.__energies, deg=order)
     
-    def __eq__(self, cal: Calibration) -> bool:
-        if len(self.__channels) != len(cal.__channels) or len(self.__energies) != len(cal.__energies):
+    def __eq__(self, other: Calibration) -> bool:
+        if type(other) != Calibration:
             return False
         
-        if any([a!=b for a, b in zip(self.__channels, cal.__channels)]):
+        if len(self.__channels) != len(other.__channels) or len(self.__energies) != len(other.__energies):
             return False
         
-        if any([a!=b for a, b in zip(self.__energies, cal.__energies)]):
+        if any([a!=b for a, b in zip(self.__channels, other.__channels)]):
             return False
         
-        if len(self.__coefficients) != len(cal.__coefficients):
+        if any([a!=b for a, b in zip(self.__energies, other.__energies)]):
             return False
         
-        if any([a!=b for a, b in zip(self.__coefficients, cal.__coefficients)]):
+        if len(self.__coefficients) != len(other.__coefficients):
+            return False
+        
+        if any([a!=b for a, b in zip(self.__coefficients, other.__coefficients)]):
             return False
         
         return True
