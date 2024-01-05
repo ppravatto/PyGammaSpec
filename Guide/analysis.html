@@ -38,6 +38,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
         <script async="async" src="../_static/sphinx-thebe.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -104,6 +106,147 @@ const thebe_selector_output = ".output, .cell_output"
              
   <section class="tex2jax_ignore mathjax_ignore" id="using-the-analysis-module">
 <span id="guide-analysis"></span><h1>Using the <code class="docutils literal notranslate"><span class="pre">analysis</span></code> module<a class="headerlink" href="#using-the-analysis-module" title="Permalink to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">analysis</span></code> module contains a small selection of useful analysis tool that can be use to extract informations from <code class="docutils literal notranslate"><span class="pre">GammaSpectrum</span></code> objects.</p>
+<section id="searching-peaks-in-a-spectrum">
+<h2>Searching peaks in a spectrum<a class="headerlink" href="#searching-peaks-in-a-spectrum" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">analysis</span></code> module provides a simple peak-search function based around the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.find_peaks.html"><code class="docutils literal notranslate"><span class="pre">scipy.signal.find_peaks</span></code></a> function. The search is based on a user-specified prominence value.</p>
+<p>A peak search can be easily performed giving the desired spectrum to the <code class="docutils literal notranslate"><span class="pre">peak_search</span></code> function specifying a prominence value. The function returns a dictionay containing as key an integer index of the peak and as values a list containing the channel index corresponding to the peak maximum, its intensity in counts per seconds per channel and, if a calibration has been applied to the spectrum, the energy value of the maximum. As an example let us apply a peak search to the <span class="math notranslate nohighlight">\(^{226}\text{Ra}\)</span> presented in the previous sections.</p>
+<p>Let us load the sample and background spectra together with the calibration file and let us generated a smoothed out difference spectrum to be used in the peak search.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pygammaspec.spectrum</span> <span class="kn">import</span> <span class="n">GammaSpectrum</span><span class="p">,</span> <span class="n">Calibration</span>
+<span class="kn">from</span> <span class="nn">pygammaspec.visualization</span> <span class="kn">import</span> <span class="n">plot_spectrum</span>
+
+<span class="n">sample</span> <span class="o">=</span> <span class="n">GammaSpectrum</span><span class="o">.</span><span class="n">from_PRA_histogram</span><span class="p">(</span><span class="s2">&quot;../utils/weak_radium.txt&quot;</span><span class="p">,</span> <span class="mi">25851</span><span class="p">)</span>
+<span class="n">background</span> <span class="o">=</span> <span class="n">GammaSpectrum</span><span class="o">.</span><span class="n">from_PRA_histogram</span><span class="p">(</span><span class="s2">&quot;../utils/background.txt&quot;</span><span class="p">,</span> <span class="mi">25851</span><span class="p">)</span>
+<span class="n">calibration</span> <span class="o">=</span> <span class="n">Calibration</span><span class="o">.</span><span class="n">from_calibration_file</span><span class="p">(</span><span class="s2">&quot;../utils/calibration.txt&quot;</span><span class="p">)</span>
+
+<span class="n">spectrum</span> <span class="o">=</span> <span class="p">(</span><span class="n">sample</span><span class="o">-</span><span class="n">background</span><span class="p">)</span><span class="o">.</span><span class="n">average_smoothing</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">spectrum</span><span class="o">.</span><span class="n">calibration</span> <span class="o">=</span> <span class="n">calibration</span>
+
+<span class="n">plot_spectrum</span><span class="p">(</span><span class="n">spectrum</span><span class="p">,</span> <span class="n">enrange</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">800</span><span class="p">),</span> <span class="n">yrange</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.0075</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5c340f7f222446b32ef52d09b3c310bff9567ac11f3d8d8103b088181a4594d4.png" src="../_images/5c340f7f222446b32ef52d09b3c310bff9567ac11f3d8d8103b088181a4594d4.png" />
+</div>
+</div>
+<p>Now that the desired <code class="docutils literal notranslate"><span class="pre">spectrum</span></code> has been obtained let us perform a peak search using the <code class="docutils literal notranslate"><span class="pre">peak_search</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pygammaspec.analysis</span> <span class="kn">import</span> <span class="n">peak_search</span>
+
+<span class="n">peaks</span> <span class="o">=</span> <span class="n">peak_search</span><span class="p">(</span><span class="n">spectrum</span><span class="p">,</span> <span class="n">prominence</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">counts</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span> <span class="ow">in</span> <span class="n">peaks</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">energy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> keV </span><span class="se">\t</span><span class="si">{</span><span class="n">counts</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> cps</span><span class="se">\t\t</span><span class="s2">(channel: </span><span class="si">{</span><span class="n">channel</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0: 45.05 keV 	1.70e-03 cps		(channel: 1.40)
+1: 80.72 keV 	4.53e-03 cps		(channel: 2.40)
+2: 187.93 keV 	5.53e-03 cps		(channel: 5.23)
+3: 238.63 keV 	3.77e-03 cps		(channel: 6.49)
+4: 295.82 keV 	5.41e-03 cps		(channel: 7.86)
+5: 352.98 keV 	6.80e-03 cps		(channel: 9.18)
+6: 609.72 keV 	2.50e-03 cps		(channel: 14.62)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Please notice how the <code class="docutils literal notranslate"><span class="pre">peak_search</span></code> function is also embedded into the <code class="docutils literal notranslate"><span class="pre">plot_spectrum</span></code> function from the <code class="docutils literal notranslate"><span class="pre">visualization</span></code> module. If a prominence value is specified in the call to <code class="docutils literal notranslate"><span class="pre">plot_spectrum</span></code>, markers with either energy or channel values (depending on the plot mode) will be plotted on the spectra:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_spectrum</span><span class="p">(</span><span class="n">spectrum</span><span class="p">,</span> <span class="n">enrange</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">800</span><span class="p">),</span> <span class="n">yrange</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.009</span><span class="p">),</span> <span class="n">prominence</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/813316594900aeca8ef555a69518240f1ec0487ebffa8a790a5e683158f03c9f.png" src="../_images/813316594900aeca8ef555a69518240f1ec0487ebffa8a790a5e683158f03c9f.png" />
+</div>
+</div>
+</section>
+<section id="fitting-single-peaks-in-the-spectrum">
+<h2>Fitting single peaks in the spectrum<a class="headerlink" href="#fitting-single-peaks-in-the-spectrum" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">analysis</span></code> module provides a simple peak-fit function based around the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html"><code class="docutils literal notranslate"><span class="pre">scipy.optimize.curve_fit</span></code></a> function. The function can be used to fit peaks in a <code class="docutils literal notranslate"><span class="pre">GammaSpectrum</span></code> object once it has been calibrated. Given a region of initerest, the alogrithm fits the experimental datapoints with a Gaussian function of unitary height corrected by a polinomial baseline of a user-defined order <span class="math notranslate nohighlight">\(N\)</span>. The expression of the fitting function <span class="math notranslate nohighlight">\(f(\varepsilon)\)</span>, written in terms of the vector <span class="math notranslate nohighlight">\(\mathbf{c}=[c_0, c_1, c_{N+3}]\)</span> of optimized parameters, is the following:</p>
+<div class="math notranslate nohighlight">
+\[ f(\varepsilon) := c_0 e^{-\frac{(\varepsilon-c_1)}{2 c_2^2}} + \sum_{n=0}^N c_{n+3} \varepsilon^n\]</div>
+<p>where <span class="math notranslate nohighlight">\(\varepsilon\)</span> represents the energy in <span class="math notranslate nohighlight">\(\text{keV}\)</span>, <span class="math notranslate nohighlight">\(c_0\)</span> represents the height of the gaussian fitting the peak, <span class="math notranslate nohighlight">\(c_1\)</span> represents the energy in <span class="math notranslate nohighlight">\(\text{keV}\)</span> at which the peak is located, <span class="math notranslate nohighlight">\(c_2\)</span> represents the standard deviation of the Gaussian while the coefficients <span class="math notranslate nohighlight">\(\{c_3, ..., c_{N+3}\}\)</span> represents the coefficients of the polynomial expansion.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">peak_fit</span></code> function retuns many objects. In the order:</p>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">float</span></code> values of length <span class="math notranslate nohighlight">\(N+4\)</span> representing the vector <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> of optimized parameters</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">float</span></code> values representing the section of energy values used in the fitting procedure.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">float</span></code> values containing the function profile in the considered energy region.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">float</span></code> values containing the baseline profile in the considered energy region.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">float</span></code> value representing the estimated efficiency of the detector on the fitted peak.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The efficiency <span class="math notranslate nohighlight">\(\eta\)</span> of the detector is computed based on the ratio of the full-width at half maximum (<span class="math notranslate nohighlight">\(\text{FWHM}\)</span>) of the gaussian fitting the peak and the energy <span class="math notranslate nohighlight">\(\varepsilon_0\)</span> at which the peak is centered.</p>
+<div class="math notranslate nohighlight">
+\[ \eta := 100\frac{\text{FWHM}}{\varepsilon_0} \]</div>
+<p>or, in terms of the optimized coefficents:</p>
+<div class="math notranslate nohighlight">
+\[ \eta = 100 \frac{2c_2\sqrt{2\ln{2}}}{c_1} \]</div>
+</div>
+<p>To show how the peak fitting function can be used let us consider the peak of <span class="math notranslate nohighlight">\(^{214}\text{Bi}\)</span> at <span class="math notranslate nohighlight">\(609.9 \text{keV}\)</span> in the previously obtained spectrum. Let us perform a fitting in the region from <span class="math notranslate nohighlight">\(475\text{keV}\)</span> to <span class="math notranslate nohighlight">\(750\text{keV}\)</span> using a linear baseline (order 1):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pygammaspec.analysis</span> <span class="kn">import</span> <span class="n">fit_peak</span>
+
+<span class="n">popt</span><span class="p">,</span> <span class="n">efit</span><span class="p">,</span> <span class="n">yfit</span><span class="p">,</span> <span class="n">bfit</span><span class="p">,</span> <span class="n">efficiency</span> <span class="o">=</span> <span class="n">fit_peak</span><span class="p">(</span><span class="n">spectrum</span><span class="p">,</span> <span class="mi">475</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="n">baseline_order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fitting results:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------------&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Central energy: </span><span class="si">{</span><span class="n">popt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> keV&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Peak height: </span><span class="si">{</span><span class="n">popt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> cps&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Peak STD: </span><span class="si">{</span><span class="n">popt</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> keV^2&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting results:
+----------------------------------------
+Central energy: 603.69 keV
+Peak height: 1.92e-03 cps
+Peak STD: 30.74 keV^2
+</pre></div>
+</div>
+</div>
+</div>
+<p>The fitting results can be easily plotted using the data provided by the fitting function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">spectrum</span><span class="o">.</span><span class="n">energy</span><span class="p">,</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">counts</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">efit</span><span class="p">,</span> <span class="n">yfit</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">efit</span><span class="p">,</span> <span class="n">bfit</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">efit</span><span class="p">,</span> <span class="n">yfit</span><span class="p">,</span> <span class="n">bfit</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#00AAAA&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="mi">300</span><span class="p">,</span> <span class="mi">900</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.003</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Energy (keV)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Counts (cps)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s2">&quot;major&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;#DDDDDD&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/68595136633b66694166b706521cd3a4021868245501ba6049874f283a24debc.png" src="../_images/68595136633b66694166b706521cd3a4021868245501ba6049874f283a24debc.png" />
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
