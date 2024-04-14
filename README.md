@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <table border="0">
  <tr>
     <td><img src="docs/logo/LogoGammaPy.png" height="200"></td>
@@ -8,4 +9,3 @@
 ___
 
 PyGammaSpec is a simple python library developed to process gamma ray spectroscopy data obtained from scintillation detectors.
-
