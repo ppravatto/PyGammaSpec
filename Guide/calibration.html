@@ -12,6 +12,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
       <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
       <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
 
   
   <!--[if lt IE 9]>
@@ -55,8 +56,9 @@ const thebe_selector_output = ".output, .cell_output"
 
           
           
-          <a href="../intro.html" class="icon icon-home">
-            Python
+          <a href="../intro.html">
+            
+              <img src="../_static/LogoGammaPy.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -98,7 +100,10 @@ const thebe_selector_output = ".output, .cell_output"
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/Guide/calibration.md" rel="nofollow"> View page source</a>
       </li>
-  </ul>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="spectrum.html" class="btn btn-neutral float-left" title="Using the GammaSpectrum class" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="analysis.html" class="btn btn-neutral float-right" title="Using the analysis module" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -123,7 +128,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/a45aaad48b090b9fe9a9c2c192001e3b997089c69d5975e2600f8fc80e06c13d.png" src="../_images/a45aaad48b090b9fe9a9c2c192001e3b997089c69d5975e2600f8fc80e06c13d.png" />
+<img alt="../_images/4ddb3df960505f7e4b848f4150e267c8843d973cbd9c2cc53c298dad1fe9f975.png" src="../_images/4ddb3df960505f7e4b848f4150e267c8843d973cbd9c2cc53c298dad1fe9f975.png" />
 </div>
 </div>
 <p>The sample spectrum, even if very weak, shows the characteristic peaks of <span class="math notranslate nohighlight">\(^{226}\text{Ra}\)</span> and its daughters (<span class="math notranslate nohighlight">\(^{214}\text{Pb}\)</span>, <span class="math notranslate nohighlight">\(^{214}\text{Bi}\)</span>). Let us use these peaks as calibration. To do so let us define a dictionary correlating the channel index with the energy of the corresponding photo-peak and then let us create a calibration object by using a second order polynomial:</p>
@@ -154,7 +159,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b4af7b5fe1495456e86e2885c53a9d601c4b560f3a93f5070bfc701b5afe9fe0.png" src="../_images/b4af7b5fe1495456e86e2885c53a9d601c4b560f3a93f5070bfc701b5afe9fe0.png" />
+<img alt="../_images/45c160afc71dbc5da933a259750d24d7dc9a5f33a4ee85865c10b1dcc875a921.png" src="../_images/45c160afc71dbc5da933a259750d24d7dc9a5f33a4ee85865c10b1dcc875a921.png" />
 </div>
 </div>
 <p>Once the calibration object has been created it can be applied to a <code class="docutils literal notranslate"><span class="pre">GammaSpectrum</span></code> object by using the built-in <code class="docutils literal notranslate"><span class="pre">calibration</span></code> property setter. Once the calibration has been applied the energy scale of the spectrum can be accessed directly, as a <code class="docutils literal notranslate"><span class="pre">list</span></code> of <code class="docutils literal notranslate"><span class="pre">float</span></code> values, using the property <code class="docutils literal notranslate"><span class="pre">energy</span></code>.</p>
@@ -183,7 +188,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/96a1376cbff11bb55b4f3f0e55ac4d4db601f918083f56b1588991a577fde090.png" src="../_images/96a1376cbff11bb55b4f3f0e55ac4d4db601f918083f56b1588991a577fde090.png" />
+<img alt="../_images/477739536841d053614e9b6b312ce3b2c4afaa7007e51f9dcd4eb5672b755005.png" src="../_images/477739536841d053614e9b6b312ce3b2c4afaa7007e51f9dcd4eb5672b755005.png" />
 </div>
 </div>
 <div class="admonition tip">
@@ -214,10 +219,7 @@ const thebe_selector_output = ".output, .cell_output"
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="spectrum.html" class="btn btn-neutral float-left" title="Using the GammaSpectrum class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="analysis.html" class="btn btn-neutral float-right" title="Using the analysis module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

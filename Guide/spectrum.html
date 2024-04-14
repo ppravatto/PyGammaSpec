@@ -12,6 +12,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
       <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
       <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
 
   
   <!--[if lt IE 9]>
@@ -55,8 +56,9 @@ const thebe_selector_output = ".output, .cell_output"
 
           
           
-          <a href="../intro.html" class="icon icon-home">
-            Python
+          <a href="../intro.html">
+            
+              <img src="../_static/LogoGammaPy.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -98,7 +100,10 @@ const thebe_selector_output = ".output, .cell_output"
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/Guide/spectrum.md" rel="nofollow"> View page source</a>
       </li>
-  </ul>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="../user-guide.html" class="btn btn-neutral float-left" title="User guide" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="calibration.html" class="btn btn-neutral float-right" title="Using the Calibration class" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -122,7 +127,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;pygammaspec.spectrum.GammaSpectrum object at 0x7f60d8dd1ca0&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;pygammaspec.spectrum.GammaSpectrum object at 0x7f17e817db80&gt;
 </pre></div>
 </div>
 </div>
@@ -164,7 +169,7 @@ Counts:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c838efca8c0eab9eef951f1823ff387505eb247eb8596ebbbd0bd79fa9b4f334.png" src="../_images/c838efca8c0eab9eef951f1823ff387505eb247eb8596ebbbd0bd79fa9b4f334.png" />
+<img alt="../_images/b1dd9894498c822fe89733c206f078d31031f0383045ea62c0bcdc3111629a30.png" src="../_images/b1dd9894498c822fe89733c206f078d31031f0383045ea62c0bcdc3111629a30.png" />
 </div>
 </div>
 <p>The noisy raw data can be smoothed using the <code class="docutils literal notranslate"><span class="pre">average_smoothing</span></code> method. The method applies a moving average to the data returning a smoothed out <code class="docutils literal notranslate"><span class="pre">GammaSpectrum</span></code> object. The size of the averaging window can be set by the user using the <code class="docutils literal notranslate"><span class="pre">width</span></code> argument. The user specified <code class="docutils literal notranslate"><span class="pre">width</span></code> will set the extension (<span class="math notranslate nohighlight">\(w\)</span>) the windows from the center point. In ohter terms, the average window will have a size of <span class="math notranslate nohighlight">\(2\cdot w + 1\)</span> centered around the cannel currently subject to the smoothing. As a consequence the first and last <span class="math notranslate nohighlight">\(w\)</span> channel of the spectrum will be left empty. An example of smoothing, togheter with the resulting spectrum, is presented in the following code box:</p>
@@ -179,7 +184,7 @@ Counts:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e5d0e43ed137060b4a0fe1ffe636fca3f92f720e019302b1b51bef7455b1475b.png" src="../_images/e5d0e43ed137060b4a0fe1ffe636fca3f92f720e019302b1b51bef7455b1475b.png" />
+<img alt="../_images/cfed91112edcc46c7b574a83e03c61e226ff7f7fd1cc4dccd41b64969abd0a45.png" src="../_images/cfed91112edcc46c7b574a83e03c61e226ff7f7fd1cc4dccd41b64969abd0a45.png" />
 </div>
 </div>
 <p>The library also supports arithmetic operations between instances of the <code class="docutils literal notranslate"><span class="pre">GammaSpectrum</span></code> class. In particular given two different <code class="docutils literal notranslate"><span class="pre">GammaSpectrum</span></code> object, sum and subtractions can be performed using the <code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">-</span></code> operators. If one set of data has more channels than the other, the shorter one will be completed, with empty channels, to match the longer one.</p>
@@ -201,7 +206,7 @@ Counts:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/eb339d6bb87efeaad588efaad08a247a8c577f223a892304b15239ff59db9df9.png" src="../_images/eb339d6bb87efeaad588efaad08a247a8c577f223a892304b15239ff59db9df9.png" />
+<img alt="../_images/3c5d1b833e653c3beda428f20a92539b277cc152b58ba44c0a214ad119b180cf.png" src="../_images/3c5d1b833e653c3beda428f20a92539b277cc152b58ba44c0a214ad119b180cf.png" />
 </div>
 </div>
 <p>The newly loded spectrum represents the spectrum of a very weak Ra-226 sample. Let us use the subtraction operator (<code class="docutils literal notranslate"><span class="pre">-</span></code>) to compute the difference of the sample spectrum and the background.</p>
@@ -223,7 +228,7 @@ Channels in the sample: 6017
 Channels in the difference: 6128
 </pre></div>
 </div>
-<img alt="../_images/bda9d5802c774c22f33f12d02e7a92b575c744a129eaa0b3855689156c78a31e.png" src="../_images/bda9d5802c774c22f33f12d02e7a92b575c744a129eaa0b3855689156c78a31e.png" />
+<img alt="../_images/a7fde98305b02961097ac4e8a5cd982bad7b1c72a6e5d742476930cac9558d50.png" src="../_images/a7fde98305b02961097ac4e8a5cd982bad7b1c72a6e5d742476930cac9558d50.png" />
 </div>
 </div>
 <p>Please notice how to visualize a sample together with its background and automatically computing the difference of the two, the <code class="docutils literal notranslate"><span class="pre">plot_spectrum</span></code> function can be used providing the <code class="docutils literal notranslate"><span class="pre">background</span></code> argument. The following syntax can be used:</p>
@@ -234,7 +239,7 @@ Channels in the difference: 6128
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/579e6cffd34f744bdd5601fb0be248283fca70aaf51e3a2ac5ee4c87fb96f626.png" src="../_images/579e6cffd34f744bdd5601fb0be248283fca70aaf51e3a2ac5ee4c87fb96f626.png" />
+<img alt="../_images/0d571cb873a05b5790ea7349ac44c3c1df235fc9dce61a48998f6d7a6efa60ae.png" src="../_images/0d571cb873a05b5790ea7349ac44c3c1df235fc9dce61a48998f6d7a6efa60ae.png" />
 </div>
 </div>
 </section>
@@ -261,10 +266,7 @@ Channels in the difference: 6128
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../user-guide.html" class="btn btn-neutral float-left" title="User guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="calibration.html" class="btn btn-neutral float-right" title="Using the Calibration class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 
