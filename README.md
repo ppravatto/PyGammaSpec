@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <table border="0">
  <tr>
     <td><img src="docs/logo/LogoGammaPy.png" height="200"></td>
