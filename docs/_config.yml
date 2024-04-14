@@ -2,7 +2,7 @@
 title                       : PyGammaSpec User Guide
 author                      : Pierpaolo Pravatto
 copyright                   : "2024"
-#logo                        : logo.png
+logo                        : logo/LogoGammaPy.png
 
 # Force re-execution of notebooks on each build.
 execute:
@@ -15,7 +15,7 @@ latex:
 
 # Information about where the book exists on the web
 repository:
-  url: https://github.com/GES-ppravatto/PyGammaSpec
+  url: https://github.com/ppravatto/PyGammaSpec
   path_to_book: docs
   branch: main
 
@@ -31,4 +31,7 @@ sphinx:
     - 'sphinx.ext.napoleon'
   config:
     html_theme: sphinx_rtd_theme
+    html_theme_options:
+      logo_only: true
+      prev_next_buttons_location: top
     autodoc_typehints: "description"
