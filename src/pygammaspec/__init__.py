@@ -1,12 +1,12 @@
-import importlib.resources
-from os.path import join
+
+from os.path import join, dirname
 
 global DEFAULT_GAMMA_DATA
 DEFAULT_GAMMA_DATA = []
 
-with importlib.resources.path("pygammaspec", "data") as path:
+gamma_datafile_path = join(dirname(__file__), 'data', 'gamma_data.csv')
 
-    with open(join(path, "gamma_data.csv"), "r") as datafile:
+with open(gamma_datafile_path, "r") as datafile:
 
         for line in datafile:
 
