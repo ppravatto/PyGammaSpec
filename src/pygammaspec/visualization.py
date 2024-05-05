@@ -214,7 +214,7 @@ def plot_spectrum(
     plt.show()
 
 
-def plot_calibration(calibraton: Calibration) -> None:
+def plot_calibration(calibration: Calibration) -> None:
     """
     Plot the calibration points together with the fitting curve.
 
@@ -227,15 +227,15 @@ def plot_calibration(calibraton: Calibration) -> None:
 
     fig = plt.figure(figsize=(6, 6))
 
-    plt.scatter(calibraton.channels, calibraton.energies, marker="+", s=150, c="red")
+    plt.scatter(calibration.channels, calibration.energies, marker="+", s=150, c="red")
 
     xfit, yfit = [], []
     for i in range(1000):
         x = (
-            0.8 * min(calibraton.channels)
-            + 1.4 * i * (max(calibraton.channels) - min(calibraton.channels)) / 1000
+            0.8 * min(calibration.channels)
+            + 1.4 * i * (max(calibration.channels) - min(calibration.channels)) / 1000
         )
-        y = calibraton.get_energy(x)
+        y = calibration.get_energy(x)
 
         xfit.append(x)
         yfit.append(y)

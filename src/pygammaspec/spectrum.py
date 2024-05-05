@@ -18,7 +18,7 @@ class GammaSpectrum:
     Properties
     ----------
     calibration: Calibration
-        The calibraton object using to correlate channel indices to energy values (in keV)
+        The calibration object using to correlate channel indices to energy values (in keV)
     acquisition_time: Optional[float]
         The acquisition time (in seconds) used for the measurement.
     channels: List[float]
