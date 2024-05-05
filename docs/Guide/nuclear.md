@@ -103,3 +103,21 @@ for energy, intensity in zip(energies, intensities):
 ```
 
 As can be seen, three transitions are possible for the $^{214}\mathrm{Pb}$ and can in fact be associated to the three peaks immediately of the right of the $^{226}\mathrm{Ra}$ peak.
+
+### Predicting the position of decay daughters peaks
+
+What has been done in the previous example can also be automated using the `decay_products_spectrum` function of the `nuclear` module. The functions, given a father nuclide will automatically search for all gamma lines associated to the decay chain. Filtering can also be applied using the `branching_ratio_threshold`,`intensity_threshold` and `limit_intensity` keywords. As an example, for the case of `Ra-226` the following result can be obtained:
+
+ ```{code-cell} python
+from pygammaspec.nuclear import decay_products_spectrum
+
+nuclides, energies = decay_products_spectrum("Ra-226", branching_ratio_threshold=0.1, limit_intensity=True)
+
+for nuclide, energy in zip(nuclides, energies):
+
+  # keep only energy within the recorded spectrum
+  if energy > 800:
+    continue
+
+  print(f"{nuclide} \t {energy:.3f} keV")
+```
