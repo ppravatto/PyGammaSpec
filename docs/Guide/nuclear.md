@@ -33,7 +33,7 @@ calibration = Calibration.from_calibration_file("../utils/calibration.txt")
 spectrum = (sample-background).average_smoothing(10)
 spectrum.calibration = calibration
 
-plot_spectrum(spectrum, enrange=(0, 800), yrange=(0, 0.009), prominence=0.001)
+plot_spectrum(spectrum, enrange=(0, 750), yrange=(0, 0.009), prominence=0.001)
 ```
 
 Let us look at the spectrum and try to identify the peak that has been located at $186.87 \mathrm{keV}$. To do so, let us interrogate the `search_gamma_line` function by looking for gamma lines of energy centered around that energy with a range of $\pm 1\mathrm{keV}$. This can be done as follows:
@@ -53,12 +53,12 @@ gamma_lines = search_gamma_line(186.87, delta=1, halflife_threshold=60, intensit
 
 print(f"{len(gamma_lines)} possible gamma emission have been found\n\n")
 
-print("E (keV)\tI (%)\tt1/2 (s) \tnuclide \tdecay")
+
+print("{:^8}  {:^6}  {:^10}   {:<10}{:^6}".format("E(keV)", "I(%)", "t1/2(s)", "nuclide", "decay"))
 print("-------------------------------------------------------")
 for line in gamma_lines:
   energy, intensity, decay, halflife, nuclide, _  = line
-
-  print(f"{energy:.3f} \t{intensity:.2f}\t{halflife:.2e}\t{nuclide}    \t{decay}")
+  print("{:>8}  {:>6}  {:>10}   {:<10}{:<6}".format(f"{energy:.3f}", f"{intensity:.2f}", f"{halflife:.2e}", nuclide, decay))
 ```
 
 Looking at the list of possible gamma emitters one can now proceed by exclusion discarding exotic elements and decay modes. Among the possible candidates, $^{226}\mathrm{Ra}$, deriving from the decay of naturally occurring $^{238}\mathrm{U}$ appears to be the most plausible candidate with an energy of $186.211\mathrm{keV}$. 
@@ -85,13 +85,11 @@ from pygammaspec.nuclear import nuclide_gamma_lines
 
 energies, intensities = nuclide_gamma_lines("Pb-214")
 
-print("E (keV) \tI (%)")
-print("----------------------")
-for energy, intensity in zip(energies, intensities):
-  print(f"{energy:.3f}  \t{intensity:.2e}")
+print(f"A total of {len(energies)} gamma lines has been found")
+print(f"Intensity range from {max(intensities):.2e} to {min(intensities):.2e}")
 ```
 
-As can be seen a moltitude of transitions are possible for the nuclide. To obtain the most relevant gamma emissions we can filter by intensity either by maually setting a threshold with the keyword `intensity_threshold` of automatically by using the `limit_intensity` option. The latter automatically searches for the highest intensity transition for the nuclide and returns only those transition that are at least $10\%$ of the maximum intensity. Using the latter option we can obtain the following result:
+As can be seen a moltitude of transitions are possible for the nuclide. To obtain the most relevant gamma emissions we can filter by intensity either maually, by setting a threshold with the keyword `intensity_threshold`, or automatically by using the `limit_intensity` option. The latter automatically searches for the highest intensity transition for the nuclide and returns only those transition that are at least $10\%$ of the maximum intensity. Using the latter option we can obtain the following result:
 
 ```{code-cell} python
 energies, intensities = nuclide_gamma_lines("Pb-214", limit_intensity=True)
@@ -106,7 +104,7 @@ As can be seen, three transitions are possible for the $^{214}\mathrm{Pb}$ and c
 
 ### Predicting the position of decay daughters peaks
 
-What has been done in the previous example can also be automated using the `decay_products_spectrum` function of the `nuclear` module. The functions, given a father nuclide will automatically search for all gamma lines associated to the decay chain. Filtering can also be applied using the `branching_ratio_threshold`,`intensity_threshold` and `limit_intensity` keywords. As an example, for the case of `Ra-226` the following result can be obtained:
+What has been done in the previous example can also be automated using the `decay_products_spectrum` function of the `nuclear` module. The function, once given a `father` nuclide, will automatically search for all gamma lines associated to the decay chain. Filtering of the obtained gamma lines can also be applied directly from the function call using the `branching_ratio_threshold`,`intensity_threshold` and `limit_intensity` keywords. As an example, for the case of `Ra-226` the following result can be obtained:
 
  ```{code-cell} python
 from pygammaspec.nuclear import decay_products_spectrum
@@ -119,5 +117,22 @@ for nuclide, energy in zip(nuclides, energies):
   if energy > 800:
     continue
 
-  print(f"{nuclide} \t {energy:.3f} keV")
+  print("{:<10}{:>8} keV".format(nuclide, f"{energy:.3f}"))
+```
+
+The result of the `decay_products_spectrum` function can also be examined graphically directly using the `plot_spectrum` function from the `pygammaspec.visualization` module. The function accepts a `nuclide` keyword that, when set, automatically provides some indication about the expected positions of the gamma lines of the various decay products:
+
+
+ ```{code-cell} python
+from pygammaspec.spectrum import GammaSpectrum, Calibration
+from pygammaspec.visualization import plot_spectrum
+
+sample = GammaSpectrum.from_PRA_histogram("../utils/weak_radium.txt", 25851)
+background = GammaSpectrum.from_PRA_histogram("../utils/background.txt", 25851)
+calibration = Calibration.from_calibration_file("../utils/calibration.txt")
+
+spectrum = (sample-background).average_smoothing(10)
+spectrum.calibration = calibration
+
+plot_spectrum(spectrum, enrange=(0, 750), yrange=(0, 0.009), nuclide="Ra-226")
 ```
