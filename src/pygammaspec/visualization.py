@@ -4,6 +4,7 @@ from typing import Optional, Tuple
 
 from pygammaspec.spectrum import GammaSpectrum, Calibration
 from pygammaspec.analysis import peak_search
+from pygammaspec.nuclear import decay_products_spectrum
 
 
 def plot_spectrum(
@@ -18,6 +19,8 @@ def plot_spectrum(
     prominence: Optional[float] = None,
     filename: Optional[str] = None,
     external_calibration: Optional[Calibration] = None,
+    nuclide: Optional[str] = None,
+    branching_ratio_threshold: float = 0.05,
 ):
     """
     The function plots the gamma spectrum of the sample. If a background spetrum is given, the function automatically
@@ -53,6 +56,12 @@ def plot_spectrum(
     external_calibration: Optional[Calibration]
         If not `None`, will apply energy scale to the x-axis. If a calibration is applied to the spectra the new calibration
         will override it during plotting.
+    nuclide: Optional[str]
+        If a nuclide is provided, the plotter will add on the spectrum a marker on the theoretical location of
+        the main gamma lines associated to the decay products of the specified nuclide. This option will work only
+        in the case of calibrated spectra.
+    branching_ratio_threshold: float
+        The brancing ratio threshold used to search for decay products of the target nuclide. (default 0.05)
 
     Raises
     ------
@@ -133,7 +142,9 @@ def plot_spectrum(
         elif enrange is None and chrange is None:
             # Determine the starting point of the spectra on the x-axis to avoid blanck region at low energy
             xstart = 0
-            background_counts = (background.counts if background else [0 for _ in sample.channels])
+            background_counts = (
+                background.counts if background else [0 for _ in sample.channels]
+            )
             for x, y1, y2 in zip(sample.channels, background_counts, sample.counts):
                 if y1 > 0 or y2 > 0:
                     break
@@ -172,6 +183,71 @@ def plot_spectrum(
 
         if background:
             ax2.set_ylim(yrange)
+
+    else:
+        ax1.set_ylim(ax1.get_ylim())
+
+        if background:
+            ax2.set_ylim(ax2.get_ylim())
+
+    if nuclide and calibration:
+
+        daughters, energies = decay_products_spectrum(
+            nuclide,
+            branching_ratio_threshold=branching_ratio_threshold,
+            limit_intensity=True,
+        )
+
+        for daughter, energy in zip(daughters, energies):
+
+            if enrange:
+                if energy < enrange[0] or energy > enrange[1]:
+                    continue
+
+            ax1.plot([energy, energy], ax1.get_ylim(), c="#5e79ff", linestyle="--")
+            ax1.text(
+                energy,
+                ax1.get_ylim()[1],
+                f"{daughter} ",
+                c="#5e79ff",
+                size=12,
+                rotation=90.0,
+                ha="right",
+                va="top",
+            )
+            ax1.text(
+                energy,
+                ax1.get_ylim()[1],
+                f" {energy:.2f} keV",
+                c="#5e79ff",
+                size=12,
+                rotation=90.0,
+                ha="left",
+                va="top",
+            )
+
+            if background:
+                ax2.plot([energy, energy], ax2.get_ylim(), c="#5e79ff", linestyle="--")
+                ax2.text(
+                    energy,
+                    ax2.get_ylim()[1],
+                    f"{daughter} ",
+                    c="#5e79ff",
+                    size=12,
+                    rotation=90.0,
+                    ha="right",
+                    va="top",
+                )
+                ax2.text(
+                    energy,
+                    ax2.get_ylim()[1],
+                    f" {energy:.2f} keV",
+                    c="#5e79ff",
+                    size=12,
+                    rotation=90.0,
+                    ha="left",
+                    va="top",
+                )
 
     if prominence:
         peak_dict = peak_search(difference if background else sample, prominence)
@@ -214,7 +290,7 @@ def plot_spectrum(
     plt.show()
 
 
-def plot_calibration(calibraton: Calibration) -> None:
+def plot_calibration(calibration: Calibration) -> None:
     """
     Plot the calibration points together with the fitting curve.
 
@@ -227,15 +303,15 @@ def plot_calibration(calibraton: Calibration) -> None:
 
     fig = plt.figure(figsize=(6, 6))
 
-    plt.scatter(calibraton.channels, calibraton.energies, marker="+", s=150, c="red")
+    plt.scatter(calibration.channels, calibration.energies, marker="+", s=150, c="red")
 
     xfit, yfit = [], []
     for i in range(1000):
         x = (
-            0.8 * min(calibraton.channels)
-            + 1.4 * i * (max(calibraton.channels) - min(calibraton.channels)) / 1000
+            0.8 * min(calibration.channels)
+            + 1.4 * i * (max(calibration.channels) - min(calibration.channels)) / 1000
         )
-        y = calibraton.get_energy(x)
+        y = calibration.get_energy(x)
 
         xfit.append(x)
         yfit.append(y)

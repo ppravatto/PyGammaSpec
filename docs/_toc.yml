@@ -9,12 +9,14 @@ chapters:
     - file: Guide/spectrum
     - file: Guide/calibration
     - file: Guide/analysis
+    - file: Guide/nuclear
 
 - file: api
   sections:
     - file: API/spectrum
     - file: API/analysis
     - file: API/visualization
+    - file: API/nuclear
     
 - file: contributor-guide
 - file: release-notes

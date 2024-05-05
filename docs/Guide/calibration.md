@@ -36,11 +36,11 @@ The sample spectrum, even if very weak, shows the characteristic peaks of $^{226
 from pygammaspec.spectrum import Calibration
 
 data = {
-    14.62: 609.9,   # Bi-214
-    9.18: 351.9,    # Pb-214
-    7.86: 295.2,    # Pb-214
-    6.49: 241.98,   # Pb-214
-    5.23: 186.1     # Ra-226
+    14.41: 609.312,  # Bi-214
+    9.12:  351.932,  # Pb-214
+    7.86:  295.224,  # Pb-214
+    6.59:  241.997,  # Pb-214
+    5.21:  186.211,  # Ra-226
 }
 
 calibration = Calibration(data, 2)
