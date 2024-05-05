@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using the nuclear module &mdash; PyGammaSpec User Guide</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script src="../_static/design-tabs.js"></script>
+        <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+        <script async="async" src="../_static/sphinx-thebe.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API Documentation" href="../api.html" />
+    <link rel="prev" title="Using the analysis module" href="analysis.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../intro.html">
+            
+              <img src="../_static/LogoGammaPy.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user-guide.html">User guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="spectrum.html">Using the <code class="docutils literal notranslate"><span class="pre">GammaSpectrum</span></code> class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibration.html">Using the <code class="docutils literal notranslate"><span class="pre">Calibration</span></code> class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analysis.html">Using the <code class="docutils literal notranslate"><span class="pre">analysis</span></code> module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using the <code class="docutils literal notranslate"><span class="pre">nuclear</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor-guide.html">Contributor’s guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../intro.html">Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../intro.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../user-guide.html">User guide</a></li>
+      <li class="breadcrumb-item active">Using the <code class="docutils literal notranslate"><span class="pre">nuclear</span></code> module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Guide/nuclear.md" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="analysis.html" class="btn btn-neutral float-left" title="Using the analysis module" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api.html" class="btn btn-neutral float-right" title="API Documentation" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="using-the-nuclear-module">
+<span id="guide-nuclear"></span><h1>Using the <code class="docutils literal notranslate"><span class="pre">nuclear</span></code> module<a class="headerlink" href="#using-the-nuclear-module" title="Permalink to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">nuclear</span></code> module provides the user with various type of nuclear data and can be useful in the interpretation and verification of gamma spectra. The module is constantly updated with new functions to help the user in various tasks.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">nuclear</span></code> module uses various sources of data. Gamma energy transition have been obtained from the <a class="reference external" href="http://nucleardata.nuclear.lu.se/toi/index.asp">The Lund/LBNL Nuclear Data Search</a> while decay chains and other data, such as decay branching ratios, have been taken directly from the <a class="reference external" href="https://radioactivedecay.github.io/"><code class="docutils literal notranslate"><span class="pre">radioactivedecay</span></code> python pacakge</a>.</p>
+<section id="searching-for-a-nuclide">
+<h2>Searching for a nuclide<a class="headerlink" href="#searching-for-a-nuclide" title="Permalink to this heading"></a></h2>
+<p>In the previous tutorials we showed how a gamma spectrum can be loaded, calibrated and how the user can perform a peak search allowing the individuation of the main gamma lines.</p>
+<p>Once the energy of a peak has been determined, we can try to assign it to a particular gamma emitter. To do so, the <code class="docutils literal notranslate"><span class="pre">nuclear</span></code> module provides a <code class="docutils literal notranslate"><span class="pre">search_gamma_line</span></code> function that allows the user to search to all the gamma emitters having gamma energies close to the detected one. To show how this can be done, let us consider the spectrum used in the previous tutorials as an example:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/d4b38cae25cc05330fb3bccd54beca153950e3522a52ca207ca7a00574201edc.png" src="../_images/d4b38cae25cc05330fb3bccd54beca153950e3522a52ca207ca7a00574201edc.png" />
+</div>
+</div>
+<p>Let us look at the spectrum and try to identify the peak that has been located at <span class="math notranslate nohighlight">\(186.87 \mathrm{keV}\)</span>. To do so, let us interrogate the <code class="docutils literal notranslate"><span class="pre">search_gamma_line</span></code> function by looking for gamma lines of energy centered around that energy with a range of <span class="math notranslate nohighlight">\(\pm 1\mathrm{keV}\)</span>. This can be done as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pygammaspec.nuclear</span> <span class="kn">import</span> <span class="n">search_gamma_line</span>
+
+<span class="n">gamma_lines</span> <span class="o">=</span> <span class="n">search_gamma_line</span><span class="p">(</span><span class="mf">186.87</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">gamma_lines</span><span class="p">)</span><span class="si">}</span><span class="s2"> possible gamma emission have been found</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>123 possible gamma emission have been found
+</pre></div>
+</div>
+</div>
+</div>
+<p>As can be seen 123 possible gamma emitters fall in the selected range. To help us out, let us apply some filering based on the nuclide halflife and gamma line intensity. This can be done acting directly on the <code class="docutils literal notranslate"><span class="pre">halflife_threshold</span></code> and <code class="docutils literal notranslate"><span class="pre">intensity_threshold</span></code> of the <code class="docutils literal notranslate"><span class="pre">search_gamma_line</span></code> function. Starting from the assumption that the sample has beeen acquired from a commonly existing item let us discard nuclides with short half-life smaller than, let’s say, <span class="math notranslate nohighlight">\(60s\)</span>. Please notice how this hypothesis if valid only in the case of long-lived isotopes and would not work in the identification of those peaks associated with short lived decay daughters. Furthermore, given the small acitvity of the sample, let us exclude the low intensity bands, that would not contribute much to the spectrum, by setting <span class="math notranslate nohighlight">\(1\%\)</span> as the lowest intensity:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gamma_lines</span> <span class="o">=</span> <span class="n">search_gamma_line</span><span class="p">(</span><span class="mf">186.87</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">halflife_threshold</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">intensity_threshold</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">gamma_lines</span><span class="p">)</span><span class="si">}</span><span class="s2"> possible gamma emission have been found</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:^8}</span><span class="s2">  </span><span class="si">{:^6}</span><span class="s2">  </span><span class="si">{:^10}</span><span class="s2">   </span><span class="si">{:&lt;10}{:^6}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;E(keV)&quot;</span><span class="p">,</span> <span class="s2">&quot;I(%)&quot;</span><span class="p">,</span> <span class="s2">&quot;t1/2(s)&quot;</span><span class="p">,</span> <span class="s2">&quot;nuclide&quot;</span><span class="p">,</span> <span class="s2">&quot;decay&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-------------------------------------------------------&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">gamma_lines</span><span class="p">:</span>
+  <span class="n">energy</span><span class="p">,</span> <span class="n">intensity</span><span class="p">,</span> <span class="n">decay</span><span class="p">,</span> <span class="n">halflife</span><span class="p">,</span> <span class="n">nuclide</span><span class="p">,</span> <span class="n">_</span>  <span class="o">=</span> <span class="n">line</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:&gt;8}</span><span class="s2">  </span><span class="si">{:&gt;6}</span><span class="s2">  </span><span class="si">{:&gt;10}</span><span class="s2">   </span><span class="si">{:&lt;10}{:&lt;6}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">energy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">intensity</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">halflife</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">nuclide</span><span class="p">,</span> <span class="n">decay</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32 possible gamma emission have been found
+
+
+ E(keV)    I(%)    t1/2(s)     nuclide   decay 
+-------------------------------------------------------
+ 185.930    1.74    5.04e+02   Au-187    e+b^+ 
+ 186.000    7.00    1.80e+02   Pt-182    e+b^+ 
+ 186.050    4.80    1.06e+05   Ac-226    e     
+ 186.150    1.30    8.46e+03   Pt-187    e+b^+ 
+ 186.150    1.76    2.41e+04   Pa-234    b^-   
+ 186.170    9.40    6.35e+04   Au-193    e+b^+ 
+ 186.200    8.50    8.10e+03   W-177     e+b^+ 
+ 186.211    3.59    5.05e+10   Ra-226    a     
+ 186.274    3.37    1.98e+03   Ho-159    e+b^+ 
+ 186.380   21.60    1.50e+03   Rn-221    b^-   
+ 186.400    3.30    1.75e+04   Hg-192    e     
+ 186.420    7.80    8.10e+03   W-177     e+b^+ 
+ 186.500    3.11    4.23e+04   Bi-203    e+b^+ 
+ 186.500    6.80    3.40e+02   Rn-206    e+b^+ 
+ 186.680    2.23    3.91e+04   Pt-189    e+b^+ 
+ 186.718   27.80    1.15e+04   Re-190m   b^-   
+ 186.718   48.40    1.86e+02   Re-190    b^-   
+ 186.718   52.40    1.02e+07   Ir-190    e+b^+ 
+ 186.718   66.30    1.17e+04   Ir-190m2  e+b^+ 
+ 186.718   70.20    5.94e+02   Os-190m   IT    
+ 186.770    3.00    6.78e+02   Ho-158    e+b^+ 
+ 186.800    1.70    6.12e+02   Ce-131    e+b^+ 
+ 186.800    5.00    3.90e+02   Os-179    e+b^+ 
+ 187.000   37.20    1.28e+03   Ho-158m2  e+b^+ 
+ 187.200    5.50    1.86e+02   No-255    a     
+ 187.220    4.30    1.48e+04   Tb-149    e+b^+ 
+ 187.280    3.90    8.46e+03   Pt-187    e+b^+ 
+ 187.400    1.66    3.78e+04   Ir-187    e+b^+ 
+ 187.590   19.40    8.81e+06   Pt-188    e     
+ 187.600   16.50    1.57e+04   Bk-244    e+b^+ 
+ 187.800   12.00    2.94e+02   Ta-169    e+b^+ 
+ 187.870    1.26    5.31e+04   Y-86      e+b^+ 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Looking at the list of possible gamma emitters one can now proceed by exclusion discarding exotic elements and decay modes. Among the possible candidates, <span class="math notranslate nohighlight">\(^{226}\mathrm{Ra}\)</span>, deriving from the decay of naturally occurring <span class="math notranslate nohighlight">\(^{238}\mathrm{U}\)</span> appears to be the most plausible candidate with an energy of <span class="math notranslate nohighlight">\(186.211\mathrm{keV}\)</span>.</p>
+</section>
+<section id="searching-for-decay-daughters">
+<h2>Searching for decay daughters<a class="headerlink" href="#searching-for-decay-daughters" title="Permalink to this heading"></a></h2>
+<p>In the previous section we assigned the peak at <span class="math notranslate nohighlight">\(186.87\mathrm{keV}\)</span> to the <span class="math notranslate nohighlight">\(^{226}\mathrm{Ra}\)</span> nuclide. Such a nuclide can decay forming a series of radioactive daughters that, possibly, can in turn be source of other gamma ray peaks. It is wise, as such, to verify if those peaks are present in the spectrum.</p>
+<p>to do so, we can use the <code class="docutils literal notranslate"><span class="pre">decay_products</span></code> function of the <code class="docutils literal notranslate"><span class="pre">nuclear</span></code> module. The function returns all the possible decay producto of a given nuclide and stops only when a stable isotope has been detected. To use the function, the following syntax can be used:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pygammaspec.nuclear</span> <span class="kn">import</span> <span class="n">decay_products</span>
+
+<span class="n">daughters</span> <span class="o">=</span> <span class="n">decay_products</span><span class="p">(</span><span class="s2">&quot;Ra-226&quot;</span><span class="p">,</span> <span class="n">branching_ratio_threshold</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">daughters</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Ra-226&#39;, &#39;Rn-222&#39;, &#39;Po-218&#39;, &#39;Pb-214&#39;, &#39;Bi-214&#39;, &#39;Po-214&#39;, &#39;Pb-210&#39;, &#39;Bi-210&#39;, &#39;Po-210&#39;, &#39;Pb-206&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>where we used the <code class="docutils literal notranslate"><span class="pre">branching_ratio_threshold</span></code> to discard all the branches with less than <span class="math notranslate nohighlight">\(1\%\)</span> probability.</p>
+<p>Once a decay daughter has been found, possible gamma lines associated to the nuclide can be searched using the <code class="docutils literal notranslate"><span class="pre">nuclide_gamma_lines</span></code> function from the nuclear module. Let us proceed in order by considering the case of the <code class="docutils literal notranslate"><span class="pre">Pb-214</span></code> nuclide (<code class="docutils literal notranslate"><span class="pre">Po-218</span></code> is not a gamma emitter).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pygammaspec.nuclear</span> <span class="kn">import</span> <span class="n">nuclide_gamma_lines</span>
+
+<span class="n">energies</span><span class="p">,</span> <span class="n">intensities</span> <span class="o">=</span> <span class="n">nuclide_gamma_lines</span><span class="p">(</span><span class="s2">&quot;Pb-214&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;A total of </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">energies</span><span class="p">)</span><span class="si">}</span><span class="s2"> gamma lines has been found&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Intensity range from </span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="n">intensities</span><span class="p">)</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="nb">min</span><span class="p">(</span><span class="n">intensities</span><span class="p">)</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A total of 29 gamma lines has been found
+Intensity range from 3.76e+01 to 4.00e-03
+</pre></div>
+</div>
+</div>
+</div>
+<p>As can be seen a moltitude of transitions are possible for the nuclide. To obtain the most relevant gamma emissions we can filter by intensity either maually, by setting a threshold with the keyword <code class="docutils literal notranslate"><span class="pre">intensity_threshold</span></code>, or automatically by using the <code class="docutils literal notranslate"><span class="pre">limit_intensity</span></code> option. The latter automatically searches for the highest intensity transition for the nuclide and returns only those transition that are at least <span class="math notranslate nohighlight">\(10\%\)</span> of the maximum intensity. Using the latter option we can obtain the following result:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">energies</span><span class="p">,</span> <span class="n">intensities</span> <span class="o">=</span> <span class="n">nuclide_gamma_lines</span><span class="p">(</span><span class="s2">&quot;Pb-214&quot;</span><span class="p">,</span> <span class="n">limit_intensity</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;E (keV) </span><span class="se">\t</span><span class="s2">I (%)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">energy</span><span class="p">,</span> <span class="n">intensity</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">energies</span><span class="p">,</span> <span class="n">intensities</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">energy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">  </span><span class="se">\t</span><span class="si">{</span><span class="n">intensity</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>E (keV) 	I (%)
+----------------------
+241.997  	7.43e+00
+295.224  	1.93e+01
+351.932  	3.76e+01
+</pre></div>
+</div>
+</div>
+</div>
+<p>As can be seen, three transitions are possible for the <span class="math notranslate nohighlight">\(^{214}\mathrm{Pb}\)</span> and can in fact be associated to the three peaks immediately of the right of the <span class="math notranslate nohighlight">\(^{226}\mathrm{Ra}\)</span> peak.</p>
+<section id="predicting-the-position-of-decay-daughters-peaks">
+<h3>Predicting the position of decay daughters peaks<a class="headerlink" href="#predicting-the-position-of-decay-daughters-peaks" title="Permalink to this heading"></a></h3>
+<p>What has been done in the previous example can also be automated using the <code class="docutils literal notranslate"><span class="pre">decay_products_spectrum</span></code> function of the <code class="docutils literal notranslate"><span class="pre">nuclear</span></code> module. The function, once given a <code class="docutils literal notranslate"><span class="pre">father</span></code> nuclide, will automatically search for all gamma lines associated to the decay chain. Filtering of the obtained gamma lines can also be applied directly from the function call using the <code class="docutils literal notranslate"><span class="pre">branching_ratio_threshold</span></code>,<code class="docutils literal notranslate"><span class="pre">intensity_threshold</span></code> and <code class="docutils literal notranslate"><span class="pre">limit_intensity</span></code> keywords. As an example, for the case of <code class="docutils literal notranslate"><span class="pre">Ra-226</span></code> the following result can be obtained:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pygammaspec.nuclear</span> <span class="kn">import</span> <span class="n">decay_products_spectrum</span>
+
+<span class="n">nuclides</span><span class="p">,</span> <span class="n">energies</span> <span class="o">=</span> <span class="n">decay_products_spectrum</span><span class="p">(</span><span class="s2">&quot;Ra-226&quot;</span><span class="p">,</span> <span class="n">branching_ratio_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">limit_intensity</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">nuclide</span><span class="p">,</span> <span class="n">energy</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">nuclides</span><span class="p">,</span> <span class="n">energies</span><span class="p">):</span>
+
+ <span class="c1"># keep only energy within the recorded spectrum</span>
+ <span class="k">if</span> <span class="n">energy</span> <span class="o">&gt;</span> <span class="mi">800</span><span class="p">:</span>
+   <span class="k">continue</span>
+
+ <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:&lt;10}{:&gt;8}</span><span class="s2"> keV&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nuclide</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">energy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ra-226     186.211 keV
+Rn-222     511.000 keV
+Pb-214     241.997 keV
+Pb-214     295.224 keV
+Pb-214     351.932 keV
+Bi-214     609.312 keV
+Bi-214     768.356 keV
+Po-214     799.700 keV
+Pb-210      46.539 keV
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result of the <code class="docutils literal notranslate"><span class="pre">decay_products_spectrum</span></code> function can also be examined graphically directly using the <code class="docutils literal notranslate"><span class="pre">plot_spectrum</span></code> function from the <code class="docutils literal notranslate"><span class="pre">pygammaspec.visualization</span></code> module. The function accepts a <code class="docutils literal notranslate"><span class="pre">nuclide</span></code> keyword that, when set, automatically provides some indication about the expected positions of the gamma lines of the various decay products:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pygammaspec.spectrum</span> <span class="kn">import</span> <span class="n">GammaSpectrum</span><span class="p">,</span> <span class="n">Calibration</span>
+<span class="kn">from</span> <span class="nn">pygammaspec.visualization</span> <span class="kn">import</span> <span class="n">plot_spectrum</span>
+
+<span class="n">sample</span> <span class="o">=</span> <span class="n">GammaSpectrum</span><span class="o">.</span><span class="n">from_PRA_histogram</span><span class="p">(</span><span class="s2">&quot;../utils/weak_radium.txt&quot;</span><span class="p">,</span> <span class="mi">25851</span><span class="p">)</span>
+<span class="n">background</span> <span class="o">=</span> <span class="n">GammaSpectrum</span><span class="o">.</span><span class="n">from_PRA_histogram</span><span class="p">(</span><span class="s2">&quot;../utils/background.txt&quot;</span><span class="p">,</span> <span class="mi">25851</span><span class="p">)</span>
+<span class="n">calibration</span> <span class="o">=</span> <span class="n">Calibration</span><span class="o">.</span><span class="n">from_calibration_file</span><span class="p">(</span><span class="s2">&quot;../utils/calibration.txt&quot;</span><span class="p">)</span>
+
+<span class="n">spectrum</span> <span class="o">=</span> <span class="p">(</span><span class="n">sample</span><span class="o">-</span><span class="n">background</span><span class="p">)</span><span class="o">.</span><span class="n">average_smoothing</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">spectrum</span><span class="o">.</span><span class="n">calibration</span> <span class="o">=</span> <span class="n">calibration</span>
+
+<span class="n">plot_spectrum</span><span class="p">(</span><span class="n">spectrum</span><span class="p">,</span> <span class="n">enrange</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">750</span><span class="p">),</span> <span class="n">yrange</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.009</span><span class="p">),</span> <span class="n">nuclide</span><span class="o">=</span><span class="s2">&quot;Ra-226&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/affe98f5e6c3bb0edf966e18824d3e55b77a12d360198a565d628638c9415ae8.png" src="../_images/affe98f5e6c3bb0edf966e18824d3e55b77a12d360198a565d628638c9415ae8.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Guide"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

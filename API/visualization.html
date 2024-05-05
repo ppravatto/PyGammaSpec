@@ -42,7 +42,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Contributor’s guide" href="../contributor-guide.html" />
+    <link rel="next" title="pygammaspec.nuclear module" href="nuclear.html" />
     <link rel="prev" title="pygammaspec.analysis module" href="analysis.html" /> 
 </head>
 
@@ -73,6 +73,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="spectrum.html"><code class="docutils literal notranslate"><span class="pre">pygammaspec.spectrum</span></code> module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="analysis.html"><code class="docutils literal notranslate"><span class="pre">pygammaspec.analysis</span></code> module</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">pygammaspec.visualization</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nuclear.html"><code class="docutils literal notranslate"><span class="pre">pygammaspec.nuclear</span></code> module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../contributor-guide.html">Contributor’s guide</a></li>
@@ -100,7 +101,7 @@ const thebe_selector_output = ".output, .cell_output"
       </li>
   </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
         <a href="analysis.html" class="btn btn-neutral float-left" title="pygammaspec.analysis module" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../contributor-guide.html" class="btn btn-neutral float-right" title="Contributor’s guide" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="nuclear.html" class="btn btn-neutral float-right" title="pygammaspec.nuclear module" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
   </div>
   <hr/>
 </div>
@@ -111,14 +112,11 @@ const thebe_selector_output = ".output, .cell_output"
 <span id="pygammaspec-visualization-module"></span><span id="api-visualization"></span><h1><code class="docutils literal notranslate"><span class="pre">pygammaspec.visualization</span></code> module<a class="headerlink" href="#module-pygammaspec.visualization" title="Permalink to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="pygammaspec.visualization.plot_calibration">
-<span class="sig-prename descclassname"><span class="pre">pygammaspec.visualization.</span></span><span class="sig-name descname"><span class="pre">plot_calibration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">calibraton</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygammaspec.visualization.plot_calibration" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pygammaspec.visualization.</span></span><span class="sig-name descname"><span class="pre">plot_calibration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">calibration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygammaspec.visualization.plot_calibration" title="Permalink to this definition"></a></dt>
 <dd><p>Plot the calibration points together with the fitting curve.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>calibration</strong> (<a class="reference internal" href="spectrum.html#pygammaspec.spectrum.Calibration" title="pygammaspec.spectrum.Calibration"><em>Calibration</em></a>) – The calibration object to plot.</p></li>
-<li><p><strong>calibraton</strong> (<a class="reference internal" href="spectrum.html#pygammaspec.spectrum.Calibration" title="pygammaspec.spectrum.Calibration"><em>Calibration</em></a>) – </p></li>
-</ul>
+<dd class="field-odd"><p><strong>calibration</strong> (<a class="reference internal" href="spectrum.html#pygammaspec.spectrum.Calibration" title="pygammaspec.spectrum.Calibration"><em>Calibration</em></a>) – The calibration object to plot.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>None</p>
@@ -128,7 +126,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pygammaspec.visualization.plot_spectrum">
-<span class="sig-prename descclassname"><span class="pre">pygammaspec.visualization.</span></span><span class="sig-name descname"><span class="pre">plot_spectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlog</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylog</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chrange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enrange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yrange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smoothing_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prominence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_calibration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygammaspec.visualization.plot_spectrum" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pygammaspec.visualization.</span></span><span class="sig-name descname"><span class="pre">plot_spectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlog</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylog</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chrange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enrange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yrange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smoothing_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prominence</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">external_calibration</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nuclide</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branching_ratio_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygammaspec.visualization.plot_spectrum" title="Permalink to this definition"></a></dt>
 <dd><p>The function plots the gamma spectrum of the sample. If a background spetrum is given, the function automatically
 computes the difference of the two spectra and also displays the difference between the two spectra. If calibration
 has been applied to the given spectra the plot will automatically show energy as the x-scale.</p>
@@ -151,6 +149,10 @@ from the <cite>pygammaspec.analysis</cite> to mark the main peaks using the user
 <li><p><strong>filename</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – If not <cite>None</cite>, will indicate the path of the generated image file.</p></li>
 <li><p><strong>external_calibration</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="spectrum.html#pygammaspec.spectrum.Calibration" title="pygammaspec.spectrum.Calibration"><em>Calibration</em></a><em>]</em>) – If not <cite>None</cite>, will apply energy scale to the x-axis. If a calibration is applied to the spectra the new calibration
 will override it during plotting.</p></li>
+<li><p><strong>nuclide</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – If a nuclide is provided, the plotter will add on the spectrum a marker on the theoretical location of
+the main gamma lines associated to the decay products of the specified nuclide. This option will work only
+in the case of calibrated spectra.</p></li>
+<li><p><strong>branching_ratio_threshold</strong> (<em>float</em>) – The brancing ratio threshold used to search for decay products of the target nuclide. (default 0.05)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>

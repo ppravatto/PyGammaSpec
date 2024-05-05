@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pygammaspec.nuclear module &mdash; PyGammaSpec User Guide</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+        <script>let toggleHintShow = 'Click to show';</script>
+        <script>let toggleHintHide = 'Click to hide';</script>
+        <script>let toggleOpenOnPrint = 'true';</script>
+        <script src="../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script src="../_static/design-tabs.js"></script>
+        <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+        <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Contributor’s guide" href="../contributor-guide.html" />
+    <link rel="prev" title="pygammaspec.visualization module" href="visualization.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../intro.html">
+            
+              <img src="../_static/LogoGammaPy.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="spectrum.html"><code class="docutils literal notranslate"><span class="pre">pygammaspec.spectrum</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="analysis.html"><code class="docutils literal notranslate"><span class="pre">pygammaspec.analysis</span></code> module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html"><code class="docutils literal notranslate"><span class="pre">pygammaspec.visualization</span></code> module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">pygammaspec.nuclear</span></code> module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributor-guide.html">Contributor’s guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release-notes.html">Release notes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../intro.html">Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../intro.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Documentation</a></li>
+      <li class="breadcrumb-item active"><code class="docutils literal notranslate"><span class="pre">pygammaspec.nuclear</span></code> module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/API/nuclear.md" rel="nofollow"> View page source</a>
+      </li>
+  </ul><div class="rst-breadcrumbs-buttons" role="navigation" aria-label="Sequential page navigation">
+        <a href="visualization.html" class="btn btn-neutral float-left" title="pygammaspec.visualization module" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../contributor-guide.html" class="btn btn-neutral float-right" title="Contributor’s guide" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+  </div>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="module-pygammaspec.nuclear">
+<span id="pygammaspec-nuclear-module"></span><span id="api-nuclear"></span><h1><code class="docutils literal notranslate"><span class="pre">pygammaspec.nuclear</span></code> module<a class="headerlink" href="#module-pygammaspec.nuclear" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="pygammaspec.nuclear.decay_products">
+<span class="sig-prename descclassname"><span class="pre">pygammaspec.nuclear.</span></span><span class="sig-name descname"><span class="pre">decay_products</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">father</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branching_ratio_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygammaspec.nuclear.decay_products" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a list of nuclides generated by the radioactive decay chain of the user-specified
+<cite>father</cite> nuclide.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>father</strong> (<em>str</em>) – The string indicating the name of the isotope using the format element-antomic number (e.g. Ra-226)</p></li>
+<li><p><strong>branching_ratio_threshold</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – If set to a value different from None, will limit the decay products based on the branching ratio.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of nuclides produced by the decay chain</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pygammaspec.nuclear.decay_products_spectrum">
+<span class="sig-prename descclassname"><span class="pre">pygammaspec.nuclear.</span></span><span class="sig-name descname"><span class="pre">decay_products_spectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">father</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branching_ratio_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_intensity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygammaspec.nuclear.decay_products_spectrum" title="Permalink to this definition"></a></dt>
+<dd><p>Given a <cite>father</cite> nuclide computes all the decay products and search the associated gamma lines.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>father</strong> (<em>str</em>) – The father isotope from which the decay chain starts.</p></li>
+<li><p><strong>branching_ratio_threshold</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – If set to a value different from None, will limit the decay products based on the branching ratio.</p></li>
+<li><p><strong>limit_intensity</strong> (<em>bool</em>) – If set to true will return only the highest intensity transitions. The function will
+discard all the transition with relative intensity lower than 10% of the highest one.</p></li>
+<li><p><strong>intensity_threshold</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – If set to a value different from <cite>None</cite> will discard all the energy lines of relative intensity
+lower than the threshold. If limit_intensity is set to <cite>True</cite> this keyword will be ignored.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>List[str]</em> – The list of nuclides acting as gamma emitters.</p></li>
+<li><p><em>List[float]</em> – The energy of each gamma line in keV.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<em>List</em>[str], <em>List</em>[float]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pygammaspec.nuclear.nuclide_gamma_lines">
+<span class="sig-prename descclassname"><span class="pre">pygammaspec.nuclear.</span></span><span class="sig-name descname"><span class="pre">nuclide_gamma_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nuclide</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_intensity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygammaspec.nuclear.nuclide_gamma_lines" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the gamma lines associated to a given nuclide.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nuclide</strong> (<em>str</em>) – The nuclide name</p></li>
+<li><p><strong>limit_intensity</strong> (<em>bool</em>) – If set to true will return only the highest intensity transitions. The function will
+discard all the transition with relative intensity lower than 10% of the highest one.</p></li>
+<li><p><strong>intensity_threshold</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – If set to a value different from <cite>None</cite> will discard all the energy lines of relative intensity
+lower than the threshold. If limit_intensity is set to <cite>True</cite> this keyword will be ignored.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>List[float]</em> – The list of gamma energies (in keV) associated to the gamma linea</p></li>
+<li><p><em>List[float]</em> – The list of relative intensities (in %)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<em>List</em>[float]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pygammaspec.nuclear.search_gamma_line">
+<span class="sig-prename descclassname"><span class="pre">pygammaspec.nuclear.</span></span><span class="sig-name descname"><span class="pre">search_gamma_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">halflife_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygammaspec.nuclear.search_gamma_line" title="Permalink to this definition"></a></dt>
+<dd><p>Search gamma transitions located near the specified gamma energy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>energy</strong> (<em>float</em>) – The energy (in keV) of the transition of interest.</p></li>
+<li><p><strong>delta</strong> (<em>float</em>) – The energy range (in keV) within which the gamma line should be searched.</p></li>
+<li><p><strong>halflife_threshold</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – If set to a value different from None will include only gamma emitters with halflife
+greater than the set threshold (in seconds).</p></li>
+<li><p><strong>intensity_threshold</strong> (<em>Optional</em><em>[</em><em>float</em><em>]</em>) – If set to a value different from None will include only gamma transitions with relative
+intensities greater than the set threshold (as % values).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of lists containing in order the energy, relative intensity, decay mode, isotope
+and notes about the gamma line responding to the search parameters</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[List[Union[float, float, str, float, str, str]]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./API"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
