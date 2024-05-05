@@ -10,6 +10,6 @@ with importlib.resources.path("pygammaspec", "data") as path:
 
         for line in datafile:
 
-            sline = line.strip("\n").split(",")
+            sline = line.strip("\n").split(", ")
             data = [float(x) if i in [0, 1, 3] else x for i, x in enumerate(sline)]
             DEFAULT_GAMMA_DATA.append(data)
