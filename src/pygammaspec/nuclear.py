@@ -22,10 +22,10 @@ def search_gamma_line(
         The energy range (in keV) within which the gamma line should be searched.
     halflife_threshold: Optional[float]
         If set to a value different from None will include only gamma emitters with halflife
-        greater than the set threshold.
+        greater than the set threshold (in seconds).
     intensity_threshold: Optional[float]
         If set to a value different from None will include only gamma transitions with relative
-        intensities greater than the set threshold.
+        intensities greater than the set threshold (as % values).
 
     Returns
     -------
@@ -65,7 +65,7 @@ def nuclide_gamma_lines(
         The nuclide name
     limit_intensity: bool
         If set to true will return only the highest intensity transitions. The function will
-        discard all the transition with relative intensity lower than 30% of the highest one.
+        discard all the transition with relative intensity lower than 10% of the highest one.
     intensity_threshold: Optional[float]
         If set to a value different from `None` will discard all the energy lines of relative intensity
         lower than the threshold. If limit_intensity is set to `True` this keyword will be ignored.
@@ -97,7 +97,7 @@ def nuclide_gamma_lines(
         new_gamma_energy, new_relative_intensity = [], []
 
         for energy, intensity in zip(gamma_energy, relative_intensity):
-            if intensity > 0.3 * max_intensity:
+            if intensity > 0.1 * max_intensity:
                 new_gamma_energy.append(energy)
                 new_relative_intensity.append(intensity)
 
@@ -179,7 +179,7 @@ def decay_products_spectrum(
         If set to a value different from None, will limit the decay products based on the branching ratio.
     limit_intensity: bool
         If set to true will return only the highest intensity transitions. The function will
-        discard all the transition with relative intensity lower than 30% of the highest one.
+        discard all the transition with relative intensity lower than 10% of the highest one.
     intensity_threshold: Optional[float]
         If set to a value different from `None` will discard all the energy lines of relative intensity
         lower than the threshold. If limit_intensity is set to `True` this keyword will be ignored.
