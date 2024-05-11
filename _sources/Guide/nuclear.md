@@ -16,10 +16,10 @@ The `nuclear` module provides the user with various type of nuclear data and can
 
 The `nuclear` module uses various sources of data. Gamma energy transition have been obtained from the [The Lund/LBNL Nuclear Data Search](http://nucleardata.nuclear.lu.se/toi/index.asp) while decay chains and other data, such as decay branching ratios, have been taken directly from the [`radioactivedecay` python pacakge](https://radioactivedecay.github.io/).
 
-## Searching for a nuclide
+## Nuclide search and identification
 In the previous tutorials we showed how a gamma spectrum can be loaded, calibrated and how the user can perform a peak search allowing the individuation of the main gamma lines.
 
-Once the energy of a peak has been determined, we can try to assign it to a particular gamma emitter. To do so, the `nuclear` module provides a `search_gamma_line` function that allows the user to search to all the gamma emitters having gamma energies close to the detected one. To show how this can be done, let us consider the spectrum used in the previous tutorials as an example:
+Once the energy of a peak has been determined, we can try to assign it to a particular gamma emitter. To do so, the `nuclear` module provides a `search_gamma_line` function that allows the user to search for all the gamma emitters having gamma energies close to the detected one. To show how this can be done, let us consider the spectrum used in the previous tutorials as an example:
 
 ```{code-cell} python
 :tags: ["remove-input"]
@@ -61,7 +61,7 @@ for line in gamma_lines:
   print("{:>8}  {:>6}  {:>10}   {:<10}{:<6}".format(f"{energy:.3f}", f"{intensity:.2f}", f"{halflife:.2e}", nuclide, decay))
 ```
 
-Looking at the list of possible gamma emitters one can now proceed by exclusion discarding exotic elements and decay modes. Among the possible candidates, $^{226}\mathrm{Ra}$, deriving from the decay of naturally occurring $^{238}\mathrm{U}$ appears to be the most plausible candidate with an energy of $186.211\mathrm{keV}$. 
+Looking at the list of possible gamma emitters one can now proceed by exclusion discarding exotic elements and decay modes. Among the possible candidates $^{226}\mathrm{Ra}$, deriving from the decay of naturally occurring $^{238}\mathrm{U}$, appears to be the most plausible candidate with an energy of $186.211\mathrm{keV}$. 
 
 ## Searching for decay daughters
 In the previous section we assigned the peak at $186.87\mathrm{keV}$ to the $^{226}\mathrm{Ra}$ nuclide. Such a nuclide can decay forming a series of radioactive daughters that, possibly, can in turn be source of other gamma ray peaks. It is wise, as such, to verify if those peaks are present in the spectrum.
@@ -135,4 +135,31 @@ spectrum = (sample-background).average_smoothing(10)
 spectrum.calibration = calibration
 
 plot_spectrum(spectrum, enrange=(0, 750), yrange=(0, 0.009), nuclide="Ra-226")
+```
+
+## X-ray emissions
+The `nuclear` module also provides a simple interface to X-ray data listing a wide range of characteristic emissions associated with various elements.
+
+Similarly to what already shown for the identification of gamma ray peaks, also X-ray emisison can be seached based on energy. This can be done using the function `search_x_ray_line`:
+
+```{code-cell} python
+from pygammaspec.nuclear import search_x_ray_line
+
+lines = search_x_ray_line(11.91, delta=0.1)
+
+for line in lines:
+  print(line)
+```
+
+All the characteristic X-ray associated with an element can be listed using the `element_x_ray_lines` function according to:
+
+```{code-cell} python
+from pygammaspec.nuclear import element_x_ray_lines
+
+energies, shells = element_x_ray_lines("Au")
+
+print("E (keV)   Shell")
+print("----------------")
+for energy, shell in zip(energies, shells):
+  print(f"{energy:.3f}\t   {shell}")
 ```

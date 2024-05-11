@@ -114,10 +114,10 @@ const thebe_selector_output = ".output, .cell_output"
 <span id="guide-nuclear"></span><h1>Using the <code class="docutils literal notranslate"><span class="pre">nuclear</span></code> module<a class="headerlink" href="#using-the-nuclear-module" title="Permalink to this heading"></a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">nuclear</span></code> module provides the user with various type of nuclear data and can be useful in the interpretation and verification of gamma spectra. The module is constantly updated with new functions to help the user in various tasks.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">nuclear</span></code> module uses various sources of data. Gamma energy transition have been obtained from the <a class="reference external" href="http://nucleardata.nuclear.lu.se/toi/index.asp">The Lund/LBNL Nuclear Data Search</a> while decay chains and other data, such as decay branching ratios, have been taken directly from the <a class="reference external" href="https://radioactivedecay.github.io/"><code class="docutils literal notranslate"><span class="pre">radioactivedecay</span></code> python pacakge</a>.</p>
-<section id="searching-for-a-nuclide">
-<h2>Searching for a nuclide<a class="headerlink" href="#searching-for-a-nuclide" title="Permalink to this heading"></a></h2>
+<section id="nuclide-search-and-identification">
+<h2>Nuclide search and identification<a class="headerlink" href="#nuclide-search-and-identification" title="Permalink to this heading"></a></h2>
 <p>In the previous tutorials we showed how a gamma spectrum can be loaded, calibrated and how the user can perform a peak search allowing the individuation of the main gamma lines.</p>
-<p>Once the energy of a peak has been determined, we can try to assign it to a particular gamma emitter. To do so, the <code class="docutils literal notranslate"><span class="pre">nuclear</span></code> module provides a <code class="docutils literal notranslate"><span class="pre">search_gamma_line</span></code> function that allows the user to search to all the gamma emitters having gamma energies close to the detected one. To show how this can be done, let us consider the spectrum used in the previous tutorials as an example:</p>
+<p>Once the energy of a peak has been determined, we can try to assign it to a particular gamma emitter. To do so, the <code class="docutils literal notranslate"><span class="pre">nuclear</span></code> module provides a <code class="docutils literal notranslate"><span class="pre">search_gamma_line</span></code> function that allows the user to search for all the gamma emitters having gamma energies close to the detected one. To show how this can be done, let us consider the spectrum used in the previous tutorials as an example:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <img alt="../_images/d4b38cae25cc05330fb3bccd54beca153950e3522a52ca207ca7a00574201edc.png" src="../_images/d4b38cae25cc05330fb3bccd54beca153950e3522a52ca207ca7a00574201edc.png" />
@@ -198,7 +198,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 </div>
-<p>Looking at the list of possible gamma emitters one can now proceed by exclusion discarding exotic elements and decay modes. Among the possible candidates, <span class="math notranslate nohighlight">\(^{226}\mathrm{Ra}\)</span>, deriving from the decay of naturally occurring <span class="math notranslate nohighlight">\(^{238}\mathrm{U}\)</span> appears to be the most plausible candidate with an energy of <span class="math notranslate nohighlight">\(186.211\mathrm{keV}\)</span>.</p>
+<p>Looking at the list of possible gamma emitters one can now proceed by exclusion discarding exotic elements and decay modes. Among the possible candidates <span class="math notranslate nohighlight">\(^{226}\mathrm{Ra}\)</span>, deriving from the decay of naturally occurring <span class="math notranslate nohighlight">\(^{238}\mathrm{U}\)</span>, appears to be the most plausible candidate with an energy of <span class="math notranslate nohighlight">\(186.211\mathrm{keV}\)</span>.</p>
 </section>
 <section id="searching-for-decay-daughters">
 <h2>Searching for decay daughters<a class="headerlink" href="#searching-for-decay-daughters" title="Permalink to this heading"></a></h2>
@@ -318,6 +318,85 @@ Pb-210      46.539 keV
 </div>
 </div>
 </section>
+</section>
+<section id="x-ray-emissions">
+<h2>X-ray emissions<a class="headerlink" href="#x-ray-emissions" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">nuclear</span></code> module also provides a simple interface to X-ray data listing a wide range of characteristic emissions associated with various elements.</p>
+<p>Similarly to what already shown for the identification of gamma ray peaks, also X-ray emisison can be seached based on energy. This can be done using the function <code class="docutils literal notranslate"><span class="pre">search_x_ray_line</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pygammaspec.nuclear</span> <span class="kn">import</span> <span class="n">search_x_ray_line</span>
+
+<span class="n">lines</span> <span class="o">=</span> <span class="n">search_x_ray_line</span><span class="p">(</span><span class="mf">11.91</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[11.812, &#39;Tl&#39;, &#39;L_{b6}&#39;]
+[11.824, &#39;Hg&#39;, &#39;L_{b1}&#39;]
+[11.826, &#39;As&#39;, &#39;K_{b5}&#39;]
+[11.864, &#39;As&#39;, &#39;K_{b2}&#39;]
+[11.867, &#39;As&#39;, &#39;K_{b4}&#39;]
+[11.871, &#39;Np&#39;, &#39;L_{l}&#39;]
+[11.878, &#39;Br&#39;, &#39;K_{a2}&#39;]
+[11.896, &#39;Fr&#39;, &#39;L_{a2}&#39;]
+[11.915, &#39;Hg&#39;, &#39;L_{b2}&#39;]
+[11.916, &#39;Au&#39;, &#39;L_{b5}&#39;]
+[11.924, &#39;Br&#39;, &#39;K_{a1}&#39;]
+[11.931, &#39;Tl&#39;, &#39;L_{b4}&#39;]
+[11.955, &#39;Re&#39;, &#39;L_{g6}&#39;]
+[11.992, &#39;Hg&#39;, &#39;L_{b3}&#39;]
+[12.009, &#39;Re&#39;, &#39;L_{g2}&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>All the characteristic X-ray associated with an element can be listed using the <code class="docutils literal notranslate"><span class="pre">element_x_ray_lines</span></code> function according to:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pygammaspec.nuclear</span> <span class="kn">import</span> <span class="n">element_x_ray_lines</span>
+
+<span class="n">energies</span><span class="p">,</span> <span class="n">shells</span> <span class="o">=</span> <span class="n">element_x_ray_lines</span><span class="p">(</span><span class="s2">&quot;Au&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;E (keV)   Shell&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">energy</span><span class="p">,</span> <span class="n">shell</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">energies</span><span class="p">,</span> <span class="n">shells</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">energy</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\t</span><span class="s2">   </span><span class="si">{</span><span class="n">shell</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>E (keV)   Shell
+----------------
+8.494	   L_{l}
+9.628	   L_{a2}
+9.713	   L_{a1}
+10.309	   L_{h}
+11.160	   L_{b6}
+11.205	   L_{b4}
+11.442	   L_{b1}
+11.576	   L_{b2}
+11.610	   L_{b3}
+11.916	   L_{b5}
+13.382	   L_{g1}
+13.709	   L_{g2}
+13.731	   L_{g6}
+13.807	   L_{g3}
+66.372	   K_{a3}
+66.991	   K_{a2}
+68.806	   K_{a1}
+77.577	   K_{b3}
+77.982	   K_{b1}
+78.477	   K_{b5}
+80.130	   K_{b2}
+80.382	   K_{b4}
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 

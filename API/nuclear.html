@@ -160,6 +160,27 @@ lower than the threshold. If limit_intensity is set to <cite>True</cite> this ke
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="pygammaspec.nuclear.element_x_ray_lines">
+<span class="sig-prename descclassname"><span class="pre">pygammaspec.nuclear.</span></span><span class="sig-name descname"><span class="pre">element_x_ray_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygammaspec.nuclear.element_x_ray_lines" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the X-ray lines associated to a given element.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>element</strong> (<em>str</em>) – The element symbol.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>List[float]</em> – The list of X-ray energies (in keV) associated to the element</p></li>
+<li><p><em>List[str]</em> – The type of shell transition associated to the characteristic X-ray emission</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Tuple</em>[<em>List</em>[float], <em>List</em>[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="pygammaspec.nuclear.nuclide_gamma_lines">
 <span class="sig-prename descclassname"><span class="pre">pygammaspec.nuclear.</span></span><span class="sig-name descname"><span class="pre">nuclide_gamma_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nuclide</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_intensity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensity_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygammaspec.nuclear.nuclide_gamma_lines" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the gamma lines associated to a given nuclide.</p>
@@ -207,6 +228,27 @@ and notes about the gamma line responding to the search parameters</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>List[List[Union[float, float, str, float, str, str]]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pygammaspec.nuclear.search_x_ray_line">
+<span class="sig-prename descclassname"><span class="pre">pygammaspec.nuclear.</span></span><span class="sig-name descname"><span class="pre">search_x_ray_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pygammaspec.nuclear.search_x_ray_line" title="Permalink to this definition"></a></dt>
+<dd><p>Search X-ray transitions located near the specified energy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>energy</strong> (<em>float</em>) – The energy (in keV) of the transition of interest.</p></li>
+<li><p><strong>delta</strong> (<em>float</em>) – The energy range (in keV) within which the X-ray line should be searched.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of lists containing in order the energy, element and shell of the
+X-ray responding to the search parameters</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[List[Union[float, str, str]]]</p>
 </dd>
 </dl>
 </dd></dl>
