@@ -51,6 +51,38 @@ def search_gamma_line(
     return results
 
 
+def search_x_ray_line(
+    energy: float,
+    delta: float = 2.0,
+) -> List[List[Union[float, float, str, float, str, str]]]:
+    """
+    Search X-ray transitions located near the specified energy.
+
+    Arguments
+    ---------
+    energy: float
+        The energy (in keV) of the transition of interest.
+    delta: float
+        The energy range (in keV) within which the X-ray line should be searched.
+
+    Returns
+    -------
+    List[List[Union[float, str, str]]]:
+        A list of lists containing in order the energy, element and shell of the
+        X-ray responding to the search parameters
+    """
+    results = []
+
+    for data in pygammaspec.DEFAULT_X_RAY_DATA:
+
+        if data[0] < energy - delta or data[0] > energy + delta:
+            continue
+
+        results.append(data)
+
+    return results
+
+
 def nuclide_gamma_lines(
     nuclide: str,
     limit_intensity: bool = False,
@@ -105,6 +137,36 @@ def nuclide_gamma_lines(
 
     else:
         return gamma_energy, relative_intensity
+
+
+def element_x_ray_lines(
+    element: str,
+) -> Tuple[List[float], List[str]]:
+    """
+    Returns the X-ray lines associated to a given element.
+
+    Arguments
+    ---------
+    element: str
+        The element symbol.
+
+    Returns
+    -------
+    List[float]
+        The list of X-ray energies (in keV) associated to the element
+    List[str]
+        The type of shell transition associated to the characteristic X-ray emission 
+    """
+    x_ray_energy, shell = [], []
+
+    for data in pygammaspec.DEFAULT_X_RAY_DATA:
+
+        if data[1] == element:
+
+            x_ray_energy.append(data[0])
+            shell.append(data[2])
+
+    return x_ray_energy, shell
 
 
 def decay_products(
@@ -189,7 +251,7 @@ def decay_products_spectrum(
     List[str]
         The list of nuclides acting as gamma emitters.
     List[float]
-        The energy of each gamma line in keV.    
+        The energy of each gamma line in keV.
     """
     emitters, energies = [], []
 
